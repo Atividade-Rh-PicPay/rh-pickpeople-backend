@@ -1,6 +1,6 @@
 package com.example.rhpicpaybackend.shared.handlers;
 
-import com.example.rhpicpaybackend.dto.ExceptionOutputDTO;
+import com.example.rhpicpaybackend.dto.output.ExceptionOutputDTO;
 import com.example.rhpicpaybackend.shared.exceptions.PicPayException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
