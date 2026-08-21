@@ -1,4 +1,4 @@
-package com.example.rhpicpaybackend.model;
+package com.example.rhpicpaybackend.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,16 +7,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Funcionario {
+@AllArgsConstructor
+public class FuncionarioCardOutputDTO {
     private Long id;
     private String nome;
     private String email;
-    private String telefone;
     private String cargo;
     private String departamento;
-    private Double salario;
-    private String cidade;
-    private Status status;
+    private String status;
 }
