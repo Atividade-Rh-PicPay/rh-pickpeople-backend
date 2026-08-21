@@ -1,4 +1,4 @@
-package com.example.rhpicpaybackend.dto.response;
+package com.example.rhpicpaybackend.dto.output;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,8 +2,8 @@ package com.example.rhpicpaybackend.service;
 
 import com.example.rhpicpaybackend.dto.request.FuncionarioRequestDTO;
 import com.example.rhpicpaybackend.model.Funcionario;
-import com.example.rhpicpaybackend.model.Status;
 import com.example.rhpicpaybackend.repository.FuncionarioRepository;
+import com.example.rhpicpaybackend.shared.enums.FuncionarioStatusEnum;
 import com.example.rhpicpaybackend.utils.IdUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class FuncionarioService {
                 dto.getDepartamento(),
                 dto.getSalario(),
                 dto.getCidade(),
-                Status.EM_ANALISE
+                FuncionarioStatusEnum.EM_ANALISE
         );
 
         repository.save(funcionario);

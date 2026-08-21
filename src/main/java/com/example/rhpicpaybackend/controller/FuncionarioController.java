@@ -3,7 +3,6 @@ package com.example.rhpicpaybackend.controller;
 import com.example.rhpicpaybackend.dto.groupValidations.doPostPut;
 import com.example.rhpicpaybackend.dto.request.FuncionarioRequestDTO;
 import com.example.rhpicpaybackend.service.FuncionarioService;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
