@@ -2,7 +2,6 @@ package com.example.rhpicpaybackend.dto.request;
 
 import com.example.rhpicpaybackend.dto.groupValidations.doPatch;
 import com.example.rhpicpaybackend.dto.groupValidations.doPostPut;
-import com.example.rhpicpaybackend.model.Status;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +18,7 @@ public class FuncionarioRequestDTO {
     private String nome;
 
     @Email(
-            regexp = "[a-z]+\\.[a-zA-Z]@(picpay)\\.com",
+            regexp = "[a-z]+\\.[a-z]+@(picpay)\\.com",
             message = "Email deve conter domínio e seguir o seguinte formato: nome.sobrenome@picpay.com" ,
             groups = {doPostPut.class, doPatch.class})
     @NotBlank(message = "Email obrigatório.", groups = doPostPut.class)

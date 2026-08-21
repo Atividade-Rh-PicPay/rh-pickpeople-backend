@@ -19,10 +19,14 @@ import java.util.Optional;
 @Component
 public class FuncionarioRepository {
 
-    private List<Funcionario> funcionarios= new ArrayList<>();
+    private List<Funcionario> funcionarios = new ArrayList<>();
 
     public void save(Funcionario funcionario) {
         funcionarios.add(funcionario);
+    }
+
+    public List<Funcionario> findAll() {
+        return funcionarios;
     }
 
 }
