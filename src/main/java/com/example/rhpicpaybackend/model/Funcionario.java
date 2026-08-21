@@ -1,5 +1,6 @@
 package com.example.rhpicpaybackend.model;
 
+import com.example.rhpicpaybackend.shared.enums.FuncionarioStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +17,5 @@ public class Funcionario {
     private String departamento;
     private Double salario;
     private String cidade;
-    private Status status;
+    private FuncionarioStatusEnum status;
 }
