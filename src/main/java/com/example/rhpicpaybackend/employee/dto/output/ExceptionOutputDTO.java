@@ -1,4 +1,4 @@
-package com.example.rhpicpaybackend.dto.output;
+package com.example.rhpicpaybackend.employee.dto.output;
 
 import org.springframework.http.HttpStatus;
 
