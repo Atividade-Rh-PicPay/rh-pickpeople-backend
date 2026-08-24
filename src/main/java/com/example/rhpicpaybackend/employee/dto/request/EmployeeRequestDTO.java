@@ -13,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeRequestDTO {
+    // TO DO: refactor the message of the exceptions to a message's param
 
     @NotBlank(message = "name obrigatório.", groups = doPostPut.class)
     private String name;

@@ -8,6 +8,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum EmployeeStatusEnum {
+
+    // TO DO: refactor the name of enum status to a message's param
     UNDER_REVIEW("Under Review", 1),
     APPROVED("Approved", 2),
     REJECTED("Rejected", 3),
@@ -17,9 +19,9 @@ public enum EmployeeStatusEnum {
     private int id;
 
     public static EmployeeStatusEnum fromName(String name) {
-        for (EmployeeStatusEnum statusProblema : values()) {
-            if(statusProblema.getName().equals(name)) {
-                return statusProblema;
+        for (EmployeeStatusEnum status : values()) {
+            if(status.getName().equals(name)) {
+                return status;
             }
         }
 
@@ -27,9 +29,9 @@ public enum EmployeeStatusEnum {
     }
 
     public static EmployeeStatusEnum fromId(int id) {
-        for (EmployeeStatusEnum statusProblema : values()) {
-            if(statusProblema.getId() == id) {
-                return statusProblema;
+        for (EmployeeStatusEnum status : values()) {
+            if(status.getId() == id) {
+                return status;
             }
         }
 
