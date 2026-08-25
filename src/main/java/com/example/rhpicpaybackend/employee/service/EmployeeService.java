@@ -1,7 +1,8 @@
 package com.example.rhpicpaybackend.employee.service;
 
 import com.example.rhpicpaybackend.employee.dto.input.FindManyEmployeesInputDTO;
-import com.example.rhpicpaybackend.employee.dto.output.EmployeeOutputDTO;
+import com.example.rhpicpaybackend.employee.dto.output.EmployeeCardOutputDTO;
+import com.example.rhpicpaybackend.employee.dto.output.EmployeeDetailsOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.FindManyEmployeesOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.request.EmployeeRequestDTO;
 import com.example.rhpicpaybackend.shared.model.Employee;
@@ -18,7 +19,7 @@ public class EmployeeService {
 
     private final EmployeeRepository repository;
 
-    public EmployeeOutputDTO register(EmployeeRequestDTO input) {
+    public EmployeeCardOutputDTO register(EmployeeRequestDTO input) {
         Employee employee = new Employee(
                 input.getName(),
                 input.getEmail(),
@@ -32,7 +33,7 @@ public class EmployeeService {
 
         repository.save(employee);
 
-        return new EmployeeOutputDTO(
+        return new EmployeeCardOutputDTO(
             employee.getId(),
             employee.getName(),
             employee.getEmail(),
@@ -52,8 +53,8 @@ public class EmployeeService {
             input.take()
         );
 
-        List<EmployeeOutputDTO> employees = employeesEntities.stream()
-                .map(employee -> new EmployeeOutputDTO(
+        List<EmployeeCardOutputDTO> employees = employeesEntities.stream()
+                .map(employee -> new EmployeeCardOutputDTO(
                         employee.getId(),
                         employee.getName(),
                         employee.getEmail(),
@@ -67,5 +68,62 @@ public class EmployeeService {
             employees,
             repository.count()
         );
+    }
+
+    public EmployeeDetailsOutputDTO findOne(Long id) {
+        Employee employee = repository.findById(id);
+
+        return new EmployeeDetailsOutputDTO(
+                employee.getId(),
+                employee.getName(),
+                employee.getEmail(),
+                employee.getPhone(),
+                employee.getRole(),
+                employee.getDepartment(),
+                employee.getSalary(),
+                employee.getCity(),
+                employee.getStatus().getName()
+        );
+    }
+
+    public EmployeeDetailsOutputDTO fullUpdate(Long id, EmployeeRequestDTO input) {
+        Employee originalEmployee = repository.findById(id);
+        Employee updatedEmployee = repository.fullUpdate(originalEmployee, input);
+
+        return new EmployeeDetailsOutputDTO(
+                updatedEmployee.getId(),
+                updatedEmployee.getName(),
+                updatedEmployee.getEmail(),
+                updatedEmployee.getPhone(),
+                updatedEmployee.getRole(),
+                updatedEmployee.getDepartment(),
+                updatedEmployee.getSalary(),
+                updatedEmployee.getCity(),
+                updatedEmployee.getStatus().getName()
+        );
+    }
+
+    public EmployeeDetailsOutputDTO partialUpdate(Long id, EmployeeRequestDTO input) {
+        Employee originalEmployee = repository.findById(id);
+        Employee updatedEmployee = repository.partialUpdate(originalEmployee, input);
+
+        return new EmployeeDetailsOutputDTO(
+                updatedEmployee.getId(),
+                updatedEmployee.getName(),
+                updatedEmployee.getEmail(),
+                updatedEmployee.getPhone(),
+                updatedEmployee.getRole(),
+                updatedEmployee.getDepartment(),
+                updatedEmployee.getSalary(),
+                updatedEmployee.getCity(),
+                updatedEmployee.getStatus().getName()
+        );
+    }
+
+    public String deleteOne(Long id) {
+        Employee employee = repository.findById(id);
+
+        repository.deleteById(id);
+        return employee.getName();
     }
 }
