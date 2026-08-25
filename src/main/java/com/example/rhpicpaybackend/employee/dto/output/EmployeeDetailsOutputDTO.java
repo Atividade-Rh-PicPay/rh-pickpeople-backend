@@ -9,11 +9,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeOutputDTO {
+public class EmployeeDetailsOutputDTO {
     private Long id;
     private String name;
     private String email;
+    private String phone;
     private String role;
     private String department;
+    private Double salary;
+    private String city;
     private String status;
 }
