@@ -5,10 +5,16 @@ import com.example.rhpicpaybackend.employee.dto.output.EmployeeCardOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.EmployeeDetailsOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.FindManyEmployeesOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.request.EmployeeRequestDTO;
-import com.example.rhpicpaybackend.shared.model.Employee;
-import com.example.rhpicpaybackend.shared.repository.EmployeeRepository;
+import com.example.rhpicpaybackend.shared.exceptions.ConflictException;
+import com.example.rhpicpaybackend.shared.exceptions.NotFoundException;
+import com.example.rhpicpaybackend.shared.helpers.NormalizeInput;
+import com.example.rhpicpaybackend.shared.helpers.NormalizeOutput;
+import com.example.rhpicpaybackend.shared.models.Employee;
+import com.example.rhpicpaybackend.shared.repositories.EmployeeRepository;
 import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
+import com.example.rhpicpaybackend.shared.services.MessageService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,29 +23,37 @@ import java.util.List;
 @AllArgsConstructor
 public class EmployeeService {
 
+    private final PasswordEncoder passwordEncoder;
     private final EmployeeRepository repository;
+    private final MessageService messageService;
 
-    public EmployeeCardOutputDTO register(EmployeeRequestDTO input) {
+    public EmployeeDetailsOutputDTO register(EmployeeRequestDTO input) {
+        if (repository.findByEmail(input.getEmail()).isPresent()) throw new ConflictException("exception.employee-email.conflict");
+
         Employee employee = new Employee(
-                input.getName(),
-                input.getEmail(),
+                NormalizeInput.name(input.getName()),
+                NormalizeInput.email(input.getEmail()),
+                passwordEncoder.encode(NormalizeInput.password(input.getPassword())),
                 input.getPhone(),
-                input.getRole(),
-                input.getDepartment(),
+                NormalizeInput.name(input.getRole()),
+                NormalizeInput.name(input.getDepartment()),
                 input.getSalary(),
-                input.getCity(),
+                NormalizeInput.name(input.getCity()),
                 EmployeeStatusEnum.UNDER_REVIEW
         );
 
         repository.save(employee);
 
-        return new EmployeeCardOutputDTO(
+        return new EmployeeDetailsOutputDTO(
             employee.getId(),
-            employee.getName(),
-            employee.getEmail(),
-            employee.getRole(),
-            employee.getDepartment(),
-            employee.getStatus().getName()
+            NormalizeOutput.name(employee.getName()),
+            NormalizeOutput.email(employee.getEmail()),
+            NormalizeOutput.phone(employee.getPhone()),
+            NormalizeOutput.name(employee.getRole()),
+            NormalizeOutput.name(employee.getDepartment()),
+            employee.getSalary(),
+            NormalizeOutput.name(employee.getCity()),
+            messageService.getMessage(employee.getStatus().getMessage())
         );
     }
 
@@ -60,7 +74,7 @@ public class EmployeeService {
                         employee.getEmail(),
                         employee.getRole(),
                         employee.getDepartment(),
-                        employee.getStatus().getName()
+                        messageService.getMessage(employee.getStatus().getMessage())
                 ))
                 .toList();
 
@@ -71,40 +85,40 @@ public class EmployeeService {
     }
 
     public EmployeeDetailsOutputDTO findOne(Long id) {
-        Employee employee = repository.findById(id);
+        Employee employee = find(id);
 
         return new EmployeeDetailsOutputDTO(
                 employee.getId(),
-                employee.getName(),
-                employee.getEmail(),
-                employee.getPhone(),
-                employee.getRole(),
-                employee.getDepartment(),
+                NormalizeOutput.name(employee.getName()),
+                NormalizeOutput.email(employee.getEmail()),
+                NormalizeOutput.phone(employee.getPhone()),
+                NormalizeOutput.name(employee.getRole()),
+                NormalizeOutput.name(employee.getDepartment()),
                 employee.getSalary(),
-                employee.getCity(),
-                employee.getStatus().getName()
+                NormalizeOutput.name(employee.getCity()),
+                messageService.getMessage(employee.getStatus().getMessage())
         );
     }
 
     public EmployeeDetailsOutputDTO fullUpdate(Long id, EmployeeRequestDTO input) {
-        Employee originalEmployee = repository.findById(id);
-        Employee updatedEmployee = repository.fullUpdate(originalEmployee, input);
+        Employee originalEmployee = find(id);
+        Employee employee = repository.fullUpdate(originalEmployee, input);
 
         return new EmployeeDetailsOutputDTO(
-                updatedEmployee.getId(),
-                updatedEmployee.getName(),
-                updatedEmployee.getEmail(),
-                updatedEmployee.getPhone(),
-                updatedEmployee.getRole(),
-                updatedEmployee.getDepartment(),
-                updatedEmployee.getSalary(),
-                updatedEmployee.getCity(),
-                updatedEmployee.getStatus().getName()
+                employee.getId(),
+                NormalizeOutput.name(employee.getName()),
+                NormalizeOutput.email(employee.getEmail()),
+                NormalizeOutput.phone(employee.getPhone()),
+                NormalizeOutput.name(employee.getRole()),
+                NormalizeOutput.name(employee.getDepartment()),
+                employee.getSalary(),
+                NormalizeOutput.name(employee.getCity()),
+                messageService.getMessage(employee.getStatus().getMessage())
         );
     }
 
     public EmployeeDetailsOutputDTO partialUpdate(Long id, EmployeeRequestDTO input) {
-        Employee originalEmployee = repository.findById(id);
+        Employee originalEmployee = find(id);
         Employee updatedEmployee = repository.partialUpdate(originalEmployee, input);
 
         return new EmployeeDetailsOutputDTO(
@@ -116,14 +130,19 @@ public class EmployeeService {
                 updatedEmployee.getDepartment(),
                 updatedEmployee.getSalary(),
                 updatedEmployee.getCity(),
-                updatedEmployee.getStatus().getName()
+                messageService.getMessage(updatedEmployee.getStatus().getMessage())
         );
     }
 
-    public String deleteOne(Long id) {
-        Employee employee = repository.findById(id);
+    public void delete(Long id) {
+        Employee employee = find(id);
 
         repository.deleteById(id);
-        return employee.getName();
+    }
+
+    private Employee find(Long id){
+        return repository.findById(id).orElseThrow(
+            () -> new NotFoundException("exception.employee.not-found")
+        );
     }
 }

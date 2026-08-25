@@ -2,6 +2,7 @@ package com.example.rhpicpaybackend.shared.handlers;
 
 import com.example.rhpicpaybackend.employee.dto.output.ExceptionOutputDTO;
 import com.example.rhpicpaybackend.shared.exceptions.PicPayException;
+import com.example.rhpicpaybackend.shared.services.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,13 @@ import java.util.List;
 @ControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
+  private final MessageService messageService;
+
   @ExceptionHandler(PicPayException.class)
   public ResponseEntity<ExceptionOutputDTO> handlePicPayException(PicPayException ex){
     return new ResponseEntity<>(
         new ExceptionOutputDTO(
-            ex.getMessage(),
+            messageService.getMessage(ex.getMessage()),
             ex.getStatus()
         ),
         ex.getStatus()
@@ -30,7 +33,7 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ExceptionOutputDTO> handleNoResourceFoundException(NoResourceFoundException ex){
     return new ResponseEntity<>(
         new ExceptionOutputDTO(
-            "Rota não encontrada.",
+            messageService.getMessage("exception.route.not-found"),
             HttpStatus.NOT_FOUND
         ),
         HttpStatus.NOT_FOUND

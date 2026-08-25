@@ -17,14 +17,26 @@ public class OpenAPIConfig {
     return new OpenAPI()
         .info(
             new Info()
-                .title("Aether Core API")
+                .title("Picpay RH")
                 .version("v1")
-                .description("Aqui você encontra todas as rotas da API e o que é necessário enviar de parâmetros para elas funcionarem.")
+                .description("Swagger UI para documentar os parâmetros e retornos de todas as rotas.")
                 .termsOfService("")
                 .license(
                     new License()
                         .name("Apache 2.0")
                         .url("")
+                )
+        )
+        .addSecurityItem(new SecurityRequirement().addList(SecurityConfig.SECURITY))
+        .components(
+            new Components()
+                .addSecuritySchemes(
+                    SecurityConfig.SECURITY,
+                    new SecurityScheme()
+                        .name(SecurityConfig.SECURITY)
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("bearer")
+                        .bearerFormat("JWT")
                 )
         );
   }

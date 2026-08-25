@@ -2,6 +2,7 @@ package com.example.rhpicpaybackend.employee.dto.input;
 
 import com.example.rhpicpaybackend.employee.dto.query_params.FindManyEmployeesQueryParamsDTO;
 import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
+import com.example.rhpicpaybackend.shared.helpers.NormalizeInput;
 
 public record FindManyEmployeesInputDTO(
     String name,
@@ -13,8 +14,8 @@ public record FindManyEmployeesInputDTO(
 ) {
   public FindManyEmployeesInputDTO(FindManyEmployeesQueryParamsDTO input) {
     this(
-        input.name(),
-        input.email(),
+        NormalizeInput.name(input.name()),
+        NormalizeInput.email(input.email()),
         input.role(),
         input.status() != null
             ? EmployeeStatusEnum.fromId(input.status())

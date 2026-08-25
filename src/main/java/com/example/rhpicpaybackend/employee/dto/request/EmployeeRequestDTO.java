@@ -1,6 +1,8 @@
 package com.example.rhpicpaybackend.employee.dto.request;
 
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPatch;
+import com.example.rhpicpaybackend.shared.helpers.ApplicationConstants;
+import com.example.rhpicpaybackend.shared.helpers.RegexPatterns;
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPost;
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPut;
 import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
@@ -15,35 +17,71 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeRequestDTO {
-    // TO DO: refactor the message of the exceptions to a message's param
-
-    @NotBlank(message = "Name requested.", groups = {doPost.class, doPut.class})
+    @NotBlank(message = "{validation.name.required}", groups = doPost.class)
+    @Pattern(
+        regexp = RegexPatterns.NAME,
+        message = "{validation.name.regex}",
+        groups = {doPost.class, doPatch.class, doPut.class}
+    )
     private String name;
 
+    @NotBlank(message = "{validation.email.required}", groups = doPost.class)
     @Email(
-            regexp = "[a-z]+\\.[a-z]+@(picpay)\\.com",
-            message = "Email must follow the domain format: name.lastname@picpay.com" ,
-            groups = {doPost.class, doPatch.class})
-    @NotBlank(message = "Email requested..", groups = {doPost.class, doPut.class})
+            regexp = RegexPatterns.EMAIL,
+            message = "{validation.email.regex}" ,
+            groups = {doPost.class, doPatch.class, doPut.class})
     private String email;
 
-    @NotBlank(message = "Phone requested. Must contains 11 numbers!", groups = {doPost.class, doPut.class})
-    @Size(min = 11, max = 11, message = "O phone deve conter 11 números.", groups = {doPost.class, doPut.class, doPatch.class})
+    @NotBlank(message = "{validation.password.required}", groups = doPost.class)
+    @Size(
+        min = ApplicationConstants.MIN_PASSWORD_LENGTH,
+        max = ApplicationConstants.MAX_PASSWORD_LENGTH,
+        message = "{validation.password.size}",
+        groups = {doPost.class, doPatch.class, doPut.class}
+    )
+    @Email(
+        regexp = RegexPatterns.PASSWORD,
+        message = "{validation.password.regex}",
+        groups = {doPost.class, doPatch.class, doPut.class}
+    )
+    private String password;
+
+    @NotBlank(message = "{validation.phone.required}", groups = doPost.class)
+    @Pattern(
+        regexp = RegexPatterns.PHONE,
+        message = "{validation.phone.regex}",
+        groups = {doPost.class, doPatch.class, doPut.class}
+    )
     private String phone;
 
-    @NotBlank(message = "Role requested.", groups = {doPost.class, doPut.class})
+    @NotBlank(message = "{validation.role.required}", groups = doPost.class)
+    @Pattern(
+        regexp = RegexPatterns.NAME,
+        message = "{validation.role.regex}",
+        groups = {doPost.class, doPatch.class, doPut.class}
+    )
     private String role;
 
-    @NotBlank(message = "Departament requested.", groups = {doPost.class, doPut.class})
+    @NotBlank(message = "{validation.department.required}", groups = doPost.class)
+    @Pattern(
+        regexp = RegexPatterns.NAME,
+        message = "{validation.department.regex}",
+        groups = {doPost.class, doPatch.class, doPut.class}
+    )
     private String department;
 
-    @NotNull(message = "Salary requested. Must be a positive value!", groups = {doPost.class, doPut.class})
-    @DecimalMin(value = "0.0", message = "Must be a positive value.", groups = {doPost.class, doPut.class, doPatch.class})
+    @NotNull(message = "{validation.salary.required}", groups = doPost.class)
+    @DecimalMin(value = "0.0", message = "{validation.salary.min-value}", groups = {doPost.class, doPatch.class})
     private Double salary;
 
-    @NotBlank(message = "City requested.", groups = {doPost.class, doPut.class})
+    @NotBlank(message = "{validation.city.required}", groups = doPost.class)
+    @Pattern(
+        regexp = RegexPatterns.NAME,
+        message = "{validation.city.regex}",
+        groups = {doPost.class, doPatch.class, doPut.class}
+    )
     private String city;
 
-    @NotNull(message = "Status requested.", groups = doPut.class)
+    @NotNull(message = "Status requested.", groups = {doPut.class, doPatch.class})
     private Integer status;
 }

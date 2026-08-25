@@ -2,7 +2,7 @@ package com.example.rhpicpaybackend.shared.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-public abstract class PicPayException extends Exception{
+public abstract class PicPayException extends RuntimeException{
   public PicPayException(String message) {
     super(message);
   }

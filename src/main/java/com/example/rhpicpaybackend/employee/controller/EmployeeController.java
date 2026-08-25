@@ -3,7 +3,6 @@ package com.example.rhpicpaybackend.employee.controller;
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPatch;
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPost;
 import com.example.rhpicpaybackend.employee.dto.input.FindManyEmployeesInputDTO;
-import com.example.rhpicpaybackend.employee.dto.output.EmployeeCardOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.EmployeeDetailsOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.FindManyEmployeesOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.query_params.FindManyEmployeesQueryParamsDTO;
@@ -24,7 +23,7 @@ public class EmployeeController {
     private final EmployeeService service;
 
     @PostMapping()
-    public ResponseEntity<EmployeeCardOutputDTO> register(
+    public ResponseEntity<EmployeeDetailsOutputDTO> register(
         @Validated(doPost.class)
         @RequestBody
         EmployeeRequestDTO input
@@ -76,6 +75,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDetailsOutputDTO> partialUpdate(
             @PathVariable(name = "id")
             Long id,
+
             @Validated(doPatch.class)
             @RequestBody
             EmployeeRequestDTO input
@@ -87,16 +87,12 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteOne(
+    public ResponseEntity<Void> deleteOne(
             @PathVariable(name = "id")
             Long id
     ) {
-        String employeeName = service.deleteOne(id);
-        String message = String.format("%s deleted with sucess!", employeeName);
+        service.delete(id);
 
-        return new ResponseEntity<>(
-                message,
-                HttpStatus.OK
-        );
+        return ResponseEntity.noContent().build();
     }
 }
