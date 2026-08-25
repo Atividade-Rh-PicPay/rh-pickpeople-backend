@@ -3,12 +3,10 @@ package com.example.rhpicpaybackend.auth.service;
 import com.example.rhpicpaybackend.auth.dto.input.LoginInputDTO;
 import com.example.rhpicpaybackend.auth.dto.input.RefreshTokenInputDTO;
 import com.example.rhpicpaybackend.auth.dto.output.LoginOutputDTO;
-import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
 import com.example.rhpicpaybackend.shared.exceptions.BadRequestException;
 import com.example.rhpicpaybackend.shared.models.Employee;
 import com.example.rhpicpaybackend.shared.repositories.EmployeeRepository;
 import com.example.rhpicpaybackend.shared.security.jwt.JwtTokenProvider;
-import com.example.rhpicpaybackend.shared.services.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,8 +25,6 @@ public class AuthService {
   private final PasswordEncoder passwordEncoder;
   private final EmployeeRepository employeeRepository;
 
-  private final MessageService messageService;
-
   public LoginOutputDTO login(LoginInputDTO input){
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
@@ -38,7 +34,7 @@ public class AuthService {
     );
 
     Employee employee = employeeRepository.findByEmail(input.email()).orElseThrow(
-        () -> new BadRequestException(messageService.getMessage("exception.login.invalid"))
+        () -> new BadRequestException("exception.login.invalid")
     );
 
     return tokenProvider.createAccessToken(
@@ -49,7 +45,7 @@ public class AuthService {
 
   public LoginOutputDTO refreshToken(RefreshTokenInputDTO input){
     employeeRepository.findByEmail(input.email()).orElseThrow(
-        () -> new BadRequestException(messageService.getMessage("exception.login.invalid"))
+        () -> new BadRequestException("exception.login.invalid")
     );
 
     return tokenProvider.refreshToken(input.refreshToken());

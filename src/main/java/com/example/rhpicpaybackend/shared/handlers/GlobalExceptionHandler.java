@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ExceptionOutputDTO> handlePicPayException(PicPayException ex){
     return new ResponseEntity<>(
         new ExceptionOutputDTO(
-            ex.getMessage(),
+            messageService.getMessage(ex.getMessage()),
             ex.getStatus()
         ),
         ex.getStatus()

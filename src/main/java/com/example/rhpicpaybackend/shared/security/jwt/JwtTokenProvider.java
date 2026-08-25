@@ -35,7 +35,6 @@ public class JwtTokenProvider {
   private Integer validityInMilliseconds;
 
   private final UserService userService;
-  private final MessageService messageService;
 
   Algorithm algorithm = null;
 
@@ -116,7 +115,7 @@ public class JwtTokenProvider {
     try {
       return verifier.verify(token);
     } catch (JWTDecodeException | TokenExpiredException e) {
-      throw new UnauthorizedException(messageService.getMessage("exception.jwt.invalid-or-expired"));
+      throw new UnauthorizedException("exception.jwt.invalid-or-expired");
     }
   }
 
@@ -134,7 +133,7 @@ public class JwtTokenProvider {
     try {
       return decodedJWT.getExpiresAt().after(new Date());
     } catch (Exception e){
-      throw new UnauthorizedException(messageService.getMessage("exception.jwt.invalid-or-expired"));
+      throw new UnauthorizedException("exception.jwt.invalid-or-expired");
     }
   }
 }

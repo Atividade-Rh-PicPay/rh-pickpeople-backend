@@ -2,10 +2,11 @@ package com.example.rhpicpaybackend.shared.repositories;
 
 import com.example.rhpicpaybackend.employee.dto.request.EmployeeRequestDTO;
 import com.example.rhpicpaybackend.shared.exceptions.NotFoundException;
-import com.example.rhpicpaybackend.shared.exceptions.PicPayException;
 import com.example.rhpicpaybackend.shared.models.Employee;
 import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,11 @@ public class EmployeeRepository {
     // Lista dos funcionários (simulação de armazenamento de dados)
     private final Map<Long, Employee> employees = new HashMap<>();
     private Long id = 0L;
+    private final PasswordEncoder passwordEncoder;
+
+    public EmployeeRepository(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     // Simulação de Dataload
     @PostConstruct
@@ -26,6 +32,7 @@ public class EmployeeRepository {
         save(new Employee(
                 "Ryan Cursino",
                 "ryan.cursino@picpay.com",
+                passwordEncoder.encode("Senha123"),
                 "(11) 99999-0001",
                 "Desenvolvedor Backend",
                 "Tecnologia",
@@ -37,6 +44,7 @@ public class EmployeeRepository {
         save(new Employee(
                 "Lucas Almeida",
                 "lucas.almeida@picpay.com",
+                passwordEncoder.encode("Senha123"),
                 "(11) 99999-0002",
                 "Desenvolvedor Frontend",
                 "Tecnologia",
@@ -48,6 +56,7 @@ public class EmployeeRepository {
         save(new Employee(
                 "Mariana Santos",
                 "mariana.santos@picpay.com",
+                passwordEncoder.encode("Senha123"),
                 "(21) 99999-0003",
                 "Analista de Dados",
                 "Dados",
@@ -59,6 +68,7 @@ public class EmployeeRepository {
         save(new Employee(
                 "Gabriel Oliveira",
                 "gabriel.oliveira@picpay.com",
+                passwordEncoder.encode("Senha123"),
                 "(11) 99999-0004",
                 "Engenheiro de Dados",
                 "Dados",
@@ -70,6 +80,7 @@ public class EmployeeRepository {
         save(new Employee(
                 "Beatriz Ferreira",
                 "beatriz.ferreira@picpay.com",
+                passwordEncoder.encode("Senha123"),
                 "(31) 99999-0005",
                 "Product Manager",
                 "Produto",
@@ -80,7 +91,8 @@ public class EmployeeRepository {
 
         save(new Employee(
                 "João Pedro",
-                "joao.pedro@picpay.com",
+            "joao.pedro@picpay.com",
+                passwordEncoder.encode("Senha123"),
                 "(41) 99999-0006",
                 "Analista de Segurança",
                 "Segurança",
@@ -92,6 +104,7 @@ public class EmployeeRepository {
         save(new Employee(
                 "Ana Carolina",
                 "ana.carolina@picpay.com",
+                passwordEncoder.encode("Senha123"),
                 "(11) 99999-0007",
                 "UX Designer",
                 "Design",
@@ -103,6 +116,7 @@ public class EmployeeRepository {
         save(new Employee(
                 "Matheus Rodrigues",
                 "matheus.rodrigues@picpay.com",
+                passwordEncoder.encode("Senha123"),
                 "(51) 99999-0008",
                 "Analista de Recursos Humanos",
                 "Recursos Humanos",
@@ -114,6 +128,7 @@ public class EmployeeRepository {
         save(new Employee(
                 "Larissa Martins",
                 "larissa.martins@picpay.com",
+                passwordEncoder.encode("Senha123"),
                 "(11) 99999-0009",
                 "Tech Lead",
                 "Tecnologia",
@@ -125,12 +140,25 @@ public class EmployeeRepository {
         save(new Employee(
                 "Felipe Costa",
                 "felipe.costa@picpay.com",
+                passwordEncoder.encode("Senha123"),
                 "(19) 99999-0010",
                 "Analista Financeiro",
                 "Financeiro",
                 5900.00,
                 "Campinas",
                 EmployeeStatusEnum.UNDER_REVIEW
+        ));
+
+        save(new Employee(
+            "caio marcos",
+            "caio.marcos@picpay.com",
+            passwordEncoder.encode("Senha123"),
+            "(19) 99999-0010",
+            "analista de recursos humanos",
+            "recursos humanos",
+            5900.00,
+            "campinas",
+            EmployeeStatusEnum.APPROVED
         ));
     }
 
@@ -190,59 +218,60 @@ public class EmployeeRepository {
             .findFirst();
     }
 
-    public Employee findById(Long id) {
-        return employees.get(id);
+    public Optional<Employee> findById(Long id) {
+        Employee employee = employees.get(id);
+
+        return Optional.of(employee);
     }
 
-    public Employee fullUpdate(Employee originalEmployee, EmployeeRequestDTO dto) {
-        originalEmployee.setName(dto.getName());
-        originalEmployee.setEmail(dto.getEmail());
-        originalEmployee.setPhone(dto.getPhone());
-        originalEmployee.setRole(dto.getRole());
-        originalEmployee.setDepartment(dto.getDepartment());
-        originalEmployee.setSalary(dto.getSalary());
-        originalEmployee.setCity(dto.getCity());
+    public Employee fullUpdate(Employee employee, EmployeeRequestDTO input) {
+        if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("exception.employee-email.conflict");
 
-        if (dto.getStatus() != null) {
-            originalEmployee.setStatus(EmployeeStatusEnum.fromId(dto.getStatus()));
-        }
+        employee.setName(input.getName());
+        employee.setEmail(input.getEmail());
+        employee.setPassword(passwordEncoder.encode(input.getPassword()));
+        employee.setPhone(input.getPhone());
+        employee.setRole(input.getRole());
+        employee.setDepartment(input.getDepartment());
+        employee.setSalary(input.getSalary());
+        employee.setCity(input.getCity());
 
+        if (input.getStatus() != null) employee.setStatus(EmployeeStatusEnum.fromId(input.getStatus()));
 
-        employees.put(originalEmployee.getId(), originalEmployee);
-        return originalEmployee;
+        employees.put(employee.getId(), employee);
+
+        return employee;
     }
 
-    public Employee partialUpdate(Employee originalEmployee, EmployeeRequestDTO dto) {
+    public Employee partialUpdate(Employee employee, EmployeeRequestDTO input) {
+        if (input.getName() != null)
+            employee.setName(input.getName());
 
-        if (dto.getPhone() != null) {
-            originalEmployee.setPhone(dto.getPhone());
+        if (input.getEmail() != null) {
+            if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("exception.employee-email.conflict");
+
+            employee.setEmail(input.getEmail());
         }
 
-        if (dto.getRole() != null) {
-            originalEmployee.setRole(dto.getRole());
-        }
+        if (input.getPassword() != null) employee.setPassword(passwordEncoder.encode(input.getPassword()));
 
-        if (dto.getDepartment() != null) {
-            originalEmployee.setDepartment(dto.getDepartment());
-        }
+        if (input.getPhone() != null) employee.setPhone(input.getPhone());
 
-        if (dto.getSalary() != null) {
-            originalEmployee.setSalary(dto.getSalary());
-        }
+        if (input.getRole() != null) employee.setRole(input.getRole());
 
-        if (dto.getCity() != null) {
-            originalEmployee.setCity(dto.getCity());
-        }
+        if (input.getDepartment() != null) employee.setDepartment(input.getDepartment());
 
-        if (dto.getCity() != null) {
-            originalEmployee.setCity(dto.getCity());
-        }
+        if (input.getSalary() != null) employee.setSalary(input.getSalary());
 
-        if (dto.getStatus() != null)
-            originalEmployee.setStatus(EmployeeStatusEnum.fromId(dto.getStatus()));
+        if (input.getCity() != null) employee.setCity(input.getCity());
 
-        employees.put(originalEmployee.getId(), originalEmployee);
-        return originalEmployee;
+        if (input.getCity() != null) employee.setCity(input.getCity());
+
+        if (input.getStatus() != null) employee.setStatus(EmployeeStatusEnum.fromId(input.getStatus()));
+
+        employees.put(employee.getId(), employee);
+
+        return employee;
     }
 
     public void deleteById(Long id) {

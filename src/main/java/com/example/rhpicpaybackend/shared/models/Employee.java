@@ -27,9 +27,10 @@ public class Employee {
     private EmployeeStatusEnum status;
     private LocalDateTime createdAt;
 
-    public Employee(String name, String email, String phone, String role, String department, Double salary, String city, EmployeeStatusEnum status) {
+    public Employee(String name, String email, String password, String phone, String role, String department, Double salary, String city, EmployeeStatusEnum status) {
         this.name = NormalizeInput.name(name);
         this.email = NormalizeInput.email(email);
+        this.password = password;
         this.phone = NormalizeInput.phone(phone);
         this.role = NormalizeInput.name(role);
         this.department = NormalizeInput.name(department);

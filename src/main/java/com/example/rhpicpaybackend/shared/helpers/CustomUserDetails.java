@@ -15,13 +15,13 @@ public class CustomUserDetails extends User {
   public CustomUserDetails(
       String username,
       @Nullable String password,
-      String role,
+      String department,
       Long id
   ) {
     super(
         username,
         password,
-        List.of(new SimpleGrantedAuthority("ROLE_" + role))
+        List.of(new SimpleGrantedAuthority("ROLE_" + department))
     );
 
     this.id = id;

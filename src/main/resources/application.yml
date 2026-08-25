@@ -2,6 +2,9 @@ spring:
   application:
     name: rh-picpay-backend
 
+  config:
+    import: optional:file:.env[.properties]
+
   messages:
     basename: messages/messages
     encoding: UTF-8
@@ -12,3 +15,6 @@ spring:
       token:
         secret-key: ${JWT_SECRET:secret}
         expire-length: ${JWT_EXPIRE_LENGTH:3600000}
+
+cors:
+  originPatterns: ${CORS_ORIGIN_PATTERNS}
