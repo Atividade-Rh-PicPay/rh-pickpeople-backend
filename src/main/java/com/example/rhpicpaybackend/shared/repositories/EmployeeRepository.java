@@ -1,11 +1,12 @@
-package com.example.rhpicpaybackend.shared.repository;
+package com.example.rhpicpaybackend.shared.repositories;
 
-import com.example.rhpicpaybackend.shared.model.Employee;
 import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
+import com.example.rhpicpaybackend.shared.models.Employee;
 import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Component
@@ -46,6 +47,27 @@ public class EmployeeRepository {
         int toIndex = Math.min(safeSkip + safeTake, result.size());
 
         return result.subList(fromIndex, toIndex);
+    }
+
+    public Optional<Employee> findByEmail(String email){
+        return employees.values()
+            .stream()
+            .filter(employee -> employee.getEmail().equals(email))
+            .findFirst();
+    }
+
+    public Optional<Employee> findByEmailAndStatus(String email, EmployeeStatusEnum status){
+        return employees.values()
+            .stream()
+            .filter(employee -> employee.getEmail().equals(email) && employee.getStatus().equals(status))
+            .findFirst();
+    }
+
+    public Optional<Employee> findByEmailAndContainingRole(String email, String role){
+        return employees.values()
+            .stream()
+            .filter(employee -> employee.getEmail().equals(email) && employee.getRole().contains(role))
+            .findFirst();
     }
 
     public Integer count(){

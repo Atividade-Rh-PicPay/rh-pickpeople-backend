@@ -4,9 +4,12 @@ import com.example.rhpicpaybackend.employee.dto.input.FindManyEmployeesInputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.EmployeeOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.FindManyEmployeesOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.request.EmployeeRequestDTO;
-import com.example.rhpicpaybackend.shared.model.Employee;
-import com.example.rhpicpaybackend.shared.repository.EmployeeRepository;
+import com.example.rhpicpaybackend.shared.exceptions.ConflictException;
+import com.example.rhpicpaybackend.shared.exceptions.NotFoundException;
+import com.example.rhpicpaybackend.shared.models.Employee;
+import com.example.rhpicpaybackend.shared.repositories.EmployeeRepository;
 import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
+import com.example.rhpicpaybackend.shared.services.MessageService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +20,11 @@ import java.util.List;
 public class EmployeeService {
 
     private final EmployeeRepository repository;
+    private final MessageService messageService;
 
     public EmployeeOutputDTO register(EmployeeRequestDTO input) {
+        if (repository.findByEmail(input.getEmail()).isPresent()) throw new ConflictException(messageService.getMessage("exception.employee-email.conflict"));
+
         Employee employee = new Employee(
                 input.getName(),
                 input.getEmail(),

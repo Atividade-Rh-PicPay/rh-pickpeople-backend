@@ -6,3 +6,9 @@ spring:
     basename: messages/messages
     encoding: UTF-8
     fallback-to-system-locale: false
+
+  security:
+    jwt:
+      token:
+        secret-key: ${JWT_SECRET:secret}
+        expire-length: ${JWT_EXPIRE_LENGTH:3600000}

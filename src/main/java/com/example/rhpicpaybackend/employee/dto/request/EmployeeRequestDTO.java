@@ -2,6 +2,8 @@ package com.example.rhpicpaybackend.employee.dto.request;
 
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPatch;
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPostPut;
+import com.example.rhpicpaybackend.shared.helpers.ApplicationConstants;
+import com.example.rhpicpaybackend.shared.helpers.RegexPatterns;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,32 +15,67 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeRequestDTO {
-    // TO DO: refactor the message of the exceptions to a message's param
-
-    @NotBlank(message = "name obrigatório.", groups = doPostPut.class)
+    @NotBlank(message = "{validation.name.required}", groups = doPostPut.class)
+    @Pattern(
+        regexp = RegexPatterns.NAME,
+        message = "{validation.name.regex}",
+        groups = {doPostPut.class, doPatch.class}
+    )
     private String name;
 
+    @NotBlank(message = "{validation.email.required}", groups = doPostPut.class)
     @Email(
-            regexp = "[a-z]+\\.[a-z]+@(picpay)\\.com",
-            message = "Email deve conter domínio e seguir o seguinte formato: name.sobrename@picpay.com" ,
+            regexp = RegexPatterns.EMAIL,
+            message = "{validation.email.regex}" ,
             groups = {doPostPut.class, doPatch.class})
-    @NotBlank(message = "Email obrigatório.", groups = doPostPut.class)
     private String email;
 
-    @NotBlank(message = "phone obrigatório. Deve conter 11 dígitos!", groups = doPostPut.class)
-    @Size(min = 11, max = 11, message = "O phone deve conter 11 números.", groups = {doPostPut.class, doPatch.class})
+    @NotBlank(message = "{validation.password.required}", groups = doPostPut.class)
+    @Size(
+        min = ApplicationConstants.MIN_PASSWORD_LENGTH,
+        max = ApplicationConstants.MAX_PASSWORD_LENGTH,
+        message = "{validation.password.size}"
+    )
+    @Email(
+        regexp = RegexPatterns.PASSWORD,
+        message = "{validation.password.regex}",
+        groups = {doPostPut.class, doPatch.class}
+    )
+    private String password;
+
+    @NotBlank(message = "{validation.phone.required}", groups = doPostPut.class)
+    @Pattern(
+        regexp = RegexPatterns.PHONE,
+        message = "{validation.phone.regex}",
+        groups = {doPostPut.class, doPatch.class}
+    )
     private String phone;
 
-    @NotBlank(message = "role obrigatório.", groups = doPostPut.class)
+    @NotBlank(message = "{validation.role.required}", groups = doPostPut.class)
+    @Pattern(
+        regexp = RegexPatterns.NAME,
+        message = "{validation.role.regex}",
+        groups = {doPostPut.class, doPatch.class}
+    )
     private String role;
 
-    @NotBlank(message = "department obrigatório.", groups = doPostPut.class)
+    @NotBlank(message = "{validation.department.required}", groups = doPostPut.class)
+    @Pattern(
+        regexp = RegexPatterns.NAME,
+        message = "{validation.department.regex}",
+        groups = {doPostPut.class, doPatch.class}
+    )
     private String department;
 
-    @NotNull(message = "Salário obrigatório. Deve ser maior um valor positivo!", groups = doPostPut.class)
-    @DecimalMin(value = "0.0", message = "Insira um valor positivo", groups = {doPostPut.class, doPatch.class})
+    @NotNull(message = "{validation.salary.required}", groups = doPostPut.class)
+    @DecimalMin(value = "0.0", message = "{validation.salary.min-value}", groups = {doPostPut.class, doPatch.class})
     private Double salary;
 
-    @NotBlank(message = "City obrigatória.", groups = doPostPut.class)
+    @NotBlank(message = "{validation.city.required}", groups = doPostPut.class)
+    @Pattern(
+        regexp = RegexPatterns.NAME,
+        message = "{validation.city.regex}",
+        groups = {doPostPut.class, doPatch.class}
+    )
     private String city;
 }
