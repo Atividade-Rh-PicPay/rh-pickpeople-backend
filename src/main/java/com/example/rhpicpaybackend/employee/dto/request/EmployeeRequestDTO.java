@@ -1,7 +1,9 @@
 package com.example.rhpicpaybackend.employee.dto.request;
 
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPatch;
-import com.example.rhpicpaybackend.employee.dto.groupValidations.doPostPut;
+import com.example.rhpicpaybackend.employee.dto.groupValidations.doPost;
+import com.example.rhpicpaybackend.employee.dto.groupValidations.doPut;
+import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,30 +17,33 @@ import lombok.Setter;
 public class EmployeeRequestDTO {
     // TO DO: refactor the message of the exceptions to a message's param
 
-    @NotBlank(message = "name obrigatório.", groups = doPostPut.class)
+    @NotBlank(message = "Name requested.", groups = {doPost.class, doPut.class})
     private String name;
 
     @Email(
             regexp = "[a-z]+\\.[a-z]+@(picpay)\\.com",
-            message = "Email deve conter domínio e seguir o seguinte formato: name.sobrename@picpay.com" ,
-            groups = {doPostPut.class, doPatch.class})
-    @NotBlank(message = "Email obrigatório.", groups = doPostPut.class)
+            message = "Email must follow the domain format: name.lastname@picpay.com" ,
+            groups = {doPost.class, doPatch.class})
+    @NotBlank(message = "Email requested..", groups = {doPost.class, doPut.class})
     private String email;
 
-    @NotBlank(message = "phone obrigatório. Deve conter 11 dígitos!", groups = doPostPut.class)
-    @Size(min = 11, max = 11, message = "O phone deve conter 11 números.", groups = {doPostPut.class, doPatch.class})
+    @NotBlank(message = "Phone requested. Must contains 11 numbers!", groups = {doPost.class, doPut.class})
+    @Size(min = 11, max = 11, message = "O phone deve conter 11 números.", groups = {doPost.class, doPut.class, doPatch.class})
     private String phone;
 
-    @NotBlank(message = "role obrigatório.", groups = doPostPut.class)
+    @NotBlank(message = "Role requested.", groups = {doPost.class, doPut.class})
     private String role;
 
-    @NotBlank(message = "department obrigatório.", groups = doPostPut.class)
+    @NotBlank(message = "Departament requested.", groups = {doPost.class, doPut.class})
     private String department;
 
-    @NotNull(message = "Salário obrigatório. Deve ser maior um valor positivo!", groups = doPostPut.class)
-    @DecimalMin(value = "0.0", message = "Insira um valor positivo", groups = {doPostPut.class, doPatch.class})
+    @NotNull(message = "Salary requested. Must be a positive value!", groups = {doPost.class, doPut.class})
+    @DecimalMin(value = "0.0", message = "Must be a positive value.", groups = {doPost.class, doPut.class, doPatch.class})
     private Double salary;
 
-    @NotBlank(message = "City obrigatória.", groups = doPostPut.class)
+    @NotBlank(message = "City requested.", groups = {doPost.class, doPut.class})
     private String city;
+
+    @NotNull(message = "Status requested.", groups = doPut.class)
+    private Integer status;
 }
