@@ -39,7 +39,7 @@ public class AuthService {
 
     return tokenProvider.createAccessToken(
         input.email(),
-        List.of(employee.getRole())
+        List.of(employee.getDepartment())
     );
   }
 
