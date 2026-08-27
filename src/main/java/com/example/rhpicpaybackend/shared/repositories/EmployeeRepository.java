@@ -202,6 +202,24 @@ public class EmployeeRepository {
         return result.subList(fromIndex, toIndex);
     }
 
+    public Integer filteredCount(String name, String email, String role, EmployeeStatusEnum status){
+        Stream<Employee> stream = employees.values().stream();
+
+        if (name != null && !name.isBlank())
+            stream = stream.filter(employee -> employee.getName().contains(name));
+
+        if (email != null && !email.isBlank())
+            stream = stream.filter(employee -> employee.getEmail().equals(email));
+
+        if (role != null && !role.isBlank())
+            stream = stream.filter(employee -> employee.getRole().equals(role));
+
+        if (status != null)
+            stream = stream.filter(employee -> employee.getStatus().equals(status));
+
+        return stream.toList().size();
+    }
+
     public Optional<Employee> findByEmail(String email){
         return employees.values()
             .stream()

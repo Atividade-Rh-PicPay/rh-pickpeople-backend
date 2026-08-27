@@ -1,6 +1,7 @@
 package com.example.rhpicpaybackend.employee.service;
 
 import com.example.rhpicpaybackend.employee.dto.input.FindManyEmployeesInputDTO;
+import com.example.rhpicpaybackend.employee.dto.output.CountEmployeeOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.EmployeeCardOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.EmployeeDetailsOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.FindManyEmployeesOutputDTO;
@@ -83,7 +84,12 @@ public class EmployeeService {
 
         return new FindManyEmployeesOutputDTO(
             employees,
-            repository.count()
+            repository.filteredCount(
+                input.name(),
+                input.email(),
+                input.role(),
+                input.status()
+            )
         );
     }
 
@@ -145,6 +151,12 @@ public class EmployeeService {
         Employee employee = find(id);
 
         repository.deleteById(id);
+    }
+
+    public CountEmployeeOutputDTO count() {
+        return new CountEmployeeOutputDTO(
+            repository.count()
+        );
     }
 
     private Employee find(Long id){

@@ -3,6 +3,7 @@ package com.example.rhpicpaybackend.employee.controller;
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPatch;
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPost;
 import com.example.rhpicpaybackend.employee.dto.input.FindManyEmployeesInputDTO;
+import com.example.rhpicpaybackend.employee.dto.output.CountEmployeeOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.EmployeeDetailsOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.FindManyEmployeesOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.query_params.FindManyEmployeesQueryParamsDTO;
@@ -105,5 +106,13 @@ public class EmployeeController {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<CountEmployeeOutputDTO> count() {
+        return new ResponseEntity<>(
+            service.count(),
+            HttpStatus.OK
+        );
     }
 }
