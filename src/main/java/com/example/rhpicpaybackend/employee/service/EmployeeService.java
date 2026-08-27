@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -64,7 +65,8 @@ public class EmployeeService {
             input.role(),
             input.status(),
             input.skip(),
-            input.take()
+            input.take(),
+            input.sortDirection()
         );
 
         List<EmployeeCardOutputDTO> employees = employeesEntities.stream()
@@ -74,7 +76,8 @@ public class EmployeeService {
                         employee.getEmail(),
                         employee.getRole(),
                         employee.getDepartment(),
-                        messageService.getMessage(employee.getStatus().getMessage())
+                        messageService.getMessage(employee.getStatus().getMessage()),
+                        employee.getCreatedAt()
                 ))
                 .toList();
 
@@ -98,6 +101,10 @@ public class EmployeeService {
                 NormalizeOutput.name(employee.getCity()),
                 messageService.getMessage(employee.getStatus().getMessage())
         );
+    }
+
+    public Map<String, Integer> countEmployeesStatus() {
+        return repository.countEmployeesStatus();
     }
 
     public EmployeeDetailsOutputDTO fullUpdate(Long id, EmployeeRequestDTO input) {

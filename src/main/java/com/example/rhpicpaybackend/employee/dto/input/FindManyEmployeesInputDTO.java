@@ -10,7 +10,8 @@ public record FindManyEmployeesInputDTO(
     String role,
     EmployeeStatusEnum status,
     Integer take,
-    Integer skip
+    Integer skip,
+    Integer sortDirection
 ) {
   public FindManyEmployeesInputDTO(FindManyEmployeesQueryParamsDTO input) {
     this(
@@ -21,7 +22,8 @@ public record FindManyEmployeesInputDTO(
             ? EmployeeStatusEnum.fromId(input.status())
             : null,
         input.take(),
-        input.skip()
+        input.skip(),
+        input.sortDirection()
     );
   }
 }
