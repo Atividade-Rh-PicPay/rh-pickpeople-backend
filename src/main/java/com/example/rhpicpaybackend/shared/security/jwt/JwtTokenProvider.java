@@ -115,7 +115,7 @@ public class JwtTokenProvider {
     try {
       return verifier.verify(token);
     } catch (JWTDecodeException | TokenExpiredException e) {
-      throw new UnauthorizedException("exception.jwt.invalid-or-expired");
+      throw new UnauthorizedException("{exception.jwt.invalid-or-expired}");
     }
   }
 
@@ -133,7 +133,7 @@ public class JwtTokenProvider {
     try {
       return decodedJWT.getExpiresAt().after(new Date());
     } catch (Exception e){
-      throw new UnauthorizedException("exception.jwt.invalid-or-expired");
+      throw new UnauthorizedException("{exception.jwt.invalid-or-expired}");
     }
   }
 }

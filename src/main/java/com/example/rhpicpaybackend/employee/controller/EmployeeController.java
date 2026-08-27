@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/employees")
 @AllArgsConstructor
@@ -53,6 +55,14 @@ public class EmployeeController {
     ) {
         return new ResponseEntity<>(
                 service.findOne(id),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<Map<String, Integer>> countEmployessStatus() {
+        return new ResponseEntity<>(
+                service.countEmployeesStatus(),
                 HttpStatus.OK
         );
     }

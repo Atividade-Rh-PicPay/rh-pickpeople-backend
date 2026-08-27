@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -28,7 +29,7 @@ public class EmployeeService {
     private final MessageService messageService;
 
     public EmployeeDetailsOutputDTO register(EmployeeRequestDTO input) {
-        if (repository.findByEmail(input.getEmail()).isPresent()) throw new ConflictException("exception.employee-email.conflict");
+        if (repository.findByEmail(input.getEmail()).isPresent()) throw new ConflictException("{exception.employee-email.conflict}");
 
         Employee employee = new Employee(
                 NormalizeInput.name(input.getName()),
@@ -64,7 +65,8 @@ public class EmployeeService {
             input.role(),
             input.status(),
             input.skip(),
-            input.take()
+            input.take(),
+            input.sortDirection()
         );
 
         List<EmployeeCardOutputDTO> employees = employeesEntities.stream()
@@ -74,7 +76,8 @@ public class EmployeeService {
                         employee.getEmail(),
                         employee.getRole(),
                         employee.getDepartment(),
-                        messageService.getMessage(employee.getStatus().getMessage())
+                        messageService.getMessage(employee.getStatus().getMessage()),
+                        employee.getCreatedAt()
                 ))
                 .toList();
 
@@ -98,6 +101,10 @@ public class EmployeeService {
                 NormalizeOutput.name(employee.getCity()),
                 messageService.getMessage(employee.getStatus().getMessage())
         );
+    }
+
+    public Map<String, Integer> countEmployeesStatus() {
+        return repository.countEmployeesStatus();
     }
 
     public EmployeeDetailsOutputDTO fullUpdate(Long id, EmployeeRequestDTO input) {
@@ -142,7 +149,7 @@ public class EmployeeService {
 
     private Employee find(Long id){
         return repository.findById(id).orElseThrow(
-            () -> new NotFoundException("exception.employee.not-found")
+            () -> new NotFoundException("{exception.employee.not-found}")
         );
     }
 }

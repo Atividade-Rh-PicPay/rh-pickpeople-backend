@@ -10,10 +10,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public class Employee {
     private Long id;
     private String name;

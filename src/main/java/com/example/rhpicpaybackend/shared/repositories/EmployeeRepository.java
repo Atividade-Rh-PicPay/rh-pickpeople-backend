@@ -8,10 +8,8 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.stream.Stream;
 
 @Component
@@ -171,7 +169,7 @@ public class EmployeeRepository {
     }
 
     public List<Employee> findAll(String name, String email, String role, EmployeeStatusEnum status,
-                                  Integer skip, Integer take) {
+                                  Integer skip, Integer take, Integer sortDirection) {
         Stream<Employee> stream = employees.values().stream();
 
         if (name != null && !name.isBlank())
@@ -185,6 +183,13 @@ public class EmployeeRepository {
 
         if (status != null)
             stream = stream.filter(employee -> employee.getStatus().equals(status));
+
+        stream = stream.sorted(
+                sortDirection == null || sortDirection == 0
+                        ? Comparator.comparing(Employee::getCreatedAt)
+                        : Comparator.comparing(Employee::getCreatedAt).reversed()
+        );
+
 
         List<Employee> result = stream.toList();
 
@@ -204,28 +209,29 @@ public class EmployeeRepository {
             .findFirst();
     }
 
-    public Optional<Employee> findByEmailAndStatus(String email, EmployeeStatusEnum status){
-        return employees.values()
-            .stream()
-            .filter(employee -> employee.getEmail().equals(email) && employee.getStatus().equals(status))
-            .findFirst();
-    }
-
-    public Optional<Employee> findByEmailAndContainingRole(String email, String role){
-        return employees.values()
-            .stream()
-            .filter(employee -> employee.getEmail().equals(email) && employee.getRole().contains(role))
-            .findFirst();
-    }
-
     public Optional<Employee> findById(Long id) {
         Employee employee = employees.get(id);
 
         return Optional.of(employee);
     }
 
+    public Map<String, Integer> countEmployeesStatus() {
+        Map<String, Integer> map = new HashMap<>();
+
+        for (int i = 1; i <= EmployeeStatusEnum.values().length; i++) {
+
+            Stream<Employee> stream = employees.values().stream();
+
+            EmployeeStatusEnum status = EmployeeStatusEnum.fromId(i);
+            stream = stream.filter(employee -> employee.getStatus() == status);
+            map.put(status.getMessage(), stream.toList().size());
+        }
+
+        return map;
+    }
+
     public Employee fullUpdate(Employee employee, EmployeeRequestDTO input) {
-        if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("exception.employee-email.conflict");
+        if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("{exception.employee-email.conflict}");
 
         employee.setName(input.getName());
         employee.setEmail(input.getEmail());
@@ -248,7 +254,7 @@ public class EmployeeRepository {
             employee.setName(input.getName());
 
         if (input.getEmail() != null) {
-            if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("exception.employee-email.conflict");
+            if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("{exception.employee-email.conflict}");
 
             employee.setEmail(input.getEmail());
         }
