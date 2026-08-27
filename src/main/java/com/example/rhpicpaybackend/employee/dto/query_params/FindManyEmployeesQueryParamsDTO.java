@@ -6,6 +6,7 @@ public record FindManyEmployeesQueryParamsDTO (
     String role,
     Integer status,
     Integer take,
-    Integer skip
+    Integer skip,
+    Integer sortDirection
 ){
 }
