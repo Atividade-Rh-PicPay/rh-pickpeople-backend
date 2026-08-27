@@ -56,8 +56,12 @@ public class SecurityConfig {
                     "/v3/api-docs/**"
                 ).permitAll()
                 .requestMatchers(
-                    "/api/v1/**"
+                    "/api/v1/employees",
+                    "/api/v1/employees/**"
                 ).hasRole("Recursos Humanos")
+                .requestMatchers(
+                    "/api/v1/profile"
+                ).authenticated()
                 .requestMatchers("/users").denyAll()
 
         ).exceptionHandling(exception -> exception
