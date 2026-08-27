@@ -8,6 +8,7 @@ import com.example.rhpicpaybackend.employee.dto.output.FindManyEmployeesOutputDT
 import com.example.rhpicpaybackend.employee.dto.query_params.FindManyEmployeesQueryParamsDTO;
 import com.example.rhpicpaybackend.employee.dto.request.EmployeeRequestDTO;
 import com.example.rhpicpaybackend.employee.service.EmployeeService;
+import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -60,7 +61,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<Map<String, Integer>> countEmployessStatus() {
+    public ResponseEntity<Map<EmployeeStatusEnum, Integer>> countEmployessStatus() {
         return new ResponseEntity<>(
                 service.countEmployeesStatus(),
                 HttpStatus.OK

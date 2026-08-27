@@ -76,7 +76,7 @@ public class EmployeeService {
                         employee.getEmail(),
                         employee.getRole(),
                         employee.getDepartment(),
-                        messageService.getMessage(employee.getStatus().getMessage()),
+                        employee.getStatus(),
                         employee.getCreatedAt()
                 ))
                 .toList();
@@ -103,7 +103,7 @@ public class EmployeeService {
         );
     }
 
-    public Map<String, Integer> countEmployeesStatus() {
+    public Map<EmployeeStatusEnum, Integer> countEmployeesStatus() {
         return repository.countEmployeesStatus();
     }
 
