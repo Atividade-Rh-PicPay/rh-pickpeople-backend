@@ -29,7 +29,7 @@ public class EmployeeService {
     private final MessageService messageService;
 
     public EmployeeDetailsOutputDTO register(EmployeeRequestDTO input) {
-        if (repository.findByEmail(input.getEmail()).isPresent()) throw new ConflictException("{exception.employee-email.conflict}");
+        if (repository.findByEmail(input.getEmail()).isPresent()) throw new ConflictException("exception.employee-email.conflict");
 
         Employee employee = new Employee(
                 NormalizeInput.name(input.getName()),
@@ -149,7 +149,7 @@ public class EmployeeService {
 
     private Employee find(Long id){
         return repository.findById(id).orElseThrow(
-            () -> new NotFoundException("{exception.employee.not-found}")
+            () -> new NotFoundException("exception.employee.not-found")
         );
     }
 }
