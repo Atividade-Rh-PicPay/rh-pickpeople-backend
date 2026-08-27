@@ -65,7 +65,7 @@ public class ProfileService {
 
   private Employee find(Long id){
     return employeeRepository.findById(id).orElseThrow(
-        () -> new NotFoundException("{exception.employee.not-found}")
+        () -> new NotFoundException("exception.employee.not-found")
     );
   }
 }
