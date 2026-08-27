@@ -57,7 +57,7 @@ public class SecurityConfig {
                 ).permitAll()
                 .requestMatchers(
                     "/api/v1/**"
-                ).hasRole("Recursos Humanos")
+                ).hasRole("recursos humanos")
                 .requestMatchers("/users").denyAll()
 
         ).exceptionHandling(exception -> exception
