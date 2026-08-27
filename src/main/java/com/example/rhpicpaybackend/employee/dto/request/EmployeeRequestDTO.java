@@ -17,67 +17,67 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeRequestDTO {
-    @NotBlank(message = "validation.name.required", groups = doPost.class)
+    @NotBlank(message = "{validation.name.required}", groups = doPost.class)
     @Pattern(
         regexp = RegexPatterns.NAME,
-        message = "validation.name.regex",
+        message = "{validation.name.regex}",
         groups = {doPost.class, doPatch.class, doPut.class}
     )
     private String name;
 
-    @NotBlank(message = "validation.email.required", groups = doPost.class)
+    @NotBlank(message = "{validation.email.required}", groups = doPost.class)
     @Email(
             regexp = RegexPatterns.EMAIL,
-            message = "validation.email.regex" ,
+            message = "{validation.email.regex}" ,
             groups = {doPost.class, doPatch.class, doPut.class})
     private String email;
 
-    @NotBlank(message = "validation.password.required", groups = doPost.class)
+    @NotBlank(message = "{validation.password.required}", groups = doPost.class)
     @Size(
         min = ApplicationConstants.MIN_PASSWORD_LENGTH,
         max = ApplicationConstants.MAX_PASSWORD_LENGTH,
-        message = "validation.password.size",
+        message = "{validation.password.size}",
         groups = {doPost.class, doPatch.class, doPut.class}
     )
     @Email(
         regexp = RegexPatterns.PASSWORD,
-        message = "validation.password.regex",
+        message = "{validation.password.regex}",
         groups = {doPost.class, doPatch.class, doPut.class}
     )
     private String password;
 
-    @NotBlank(message = "validation.phone.required", groups = doPost.class)
+    @NotBlank(message = "{validation.phone.required}", groups = doPost.class)
     @Pattern(
         regexp = RegexPatterns.PHONE,
-        message = "validation.phone.regex",
+        message = "{validation.phone.regex}",
         groups = {doPost.class, doPatch.class, doPut.class}
     )
     private String phone;
 
-    @NotBlank(message = "validation.role.required", groups = doPost.class)
+    @NotBlank(message = "{validation.role.required}", groups = doPost.class)
     @Pattern(
         regexp = RegexPatterns.NAME,
-        message = "validation.role.regex",
+        message = "{validation.role.regex}",
         groups = {doPost.class, doPatch.class, doPut.class}
     )
     private String role;
 
-    @NotBlank(message = "validation.department.required", groups = doPost.class)
+    @NotBlank(message = "{validation.department.required}", groups = doPost.class)
     @Pattern(
         regexp = RegexPatterns.NAME,
-        message = "validation.department.regex",
+        message = "{validation.department.regex}",
         groups = {doPost.class, doPatch.class, doPut.class}
     )
     private String department;
 
-    @NotNull(message = "validation.salary.required", groups = doPost.class)
-    @DecimalMin(value = "0.0", message = "validation.salary.min-value", groups = {doPost.class, doPatch.class})
+    @NotNull(message = "{validation.salary.required}", groups = doPost.class)
+    @DecimalMin(value = "0.0", message = "{validation.salary.min-value}", groups = {doPost.class, doPatch.class})
     private Double salary;
 
-    @NotBlank(message = "validation.city.required", groups = doPost.class)
+    @NotBlank(message = "{validation.city.required}", groups = doPost.class)
     @Pattern(
         regexp = RegexPatterns.NAME,
-        message = "validation.city.regex",
+        message = "{validation.city.regex}",
         groups = {doPost.class, doPatch.class, doPut.class}
     )
     private String city;

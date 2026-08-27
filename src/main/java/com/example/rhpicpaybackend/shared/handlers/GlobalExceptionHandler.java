@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ExceptionOutputDTO> handleNoResourceFoundException(NoResourceFoundException ex){
     return new ResponseEntity<>(
         new ExceptionOutputDTO(
-            messageService.getMessage("exception.route.not-found"),
+            messageService.getMessage("{exception.route.not-found}"),
             HttpStatus.NOT_FOUND
         ),
         HttpStatus.NOT_FOUND

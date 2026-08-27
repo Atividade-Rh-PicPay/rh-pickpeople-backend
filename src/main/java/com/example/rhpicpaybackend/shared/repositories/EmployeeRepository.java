@@ -185,9 +185,9 @@ public class EmployeeRepository {
             stream = stream.filter(employee -> employee.getStatus().equals(status));
 
         stream = stream.sorted(
-                sortDirection == 1
-                        ? Comparator.comparing(Employee::getCreatedAt).reversed()
-                        : Comparator.comparing(Employee::getCreatedAt)
+                sortDirection == null || sortDirection == 0
+                        ? Comparator.comparing(Employee::getCreatedAt)
+                        : Comparator.comparing(Employee::getCreatedAt).reversed()
         );
 
 
@@ -231,7 +231,7 @@ public class EmployeeRepository {
     }
 
     public Employee fullUpdate(Employee employee, EmployeeRequestDTO input) {
-        if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("exception.employee-email.conflict");
+        if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("{exception.employee-email.conflict}");
 
         employee.setName(input.getName());
         employee.setEmail(input.getEmail());
@@ -254,7 +254,7 @@ public class EmployeeRepository {
             employee.setName(input.getName());
 
         if (input.getEmail() != null) {
-            if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("exception.employee-email.conflict");
+            if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("{exception.employee-email.conflict}");
 
             employee.setEmail(input.getEmail());
         }

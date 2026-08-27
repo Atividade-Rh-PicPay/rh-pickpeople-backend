@@ -34,7 +34,7 @@ public class AuthService {
     );
 
     Employee employee = employeeRepository.findByEmail(input.email()).orElseThrow(
-        () -> new BadRequestException("exception.login.invalid")
+        () -> new BadRequestException("{exception.login.invalid}")
     );
 
     return tokenProvider.createAccessToken(
@@ -45,7 +45,7 @@ public class AuthService {
 
   public LoginOutputDTO refreshToken(RefreshTokenInputDTO input){
     employeeRepository.findByEmail(input.email()).orElseThrow(
-        () -> new BadRequestException("exception.login.invalid")
+        () -> new BadRequestException("{exception.login.invalid}")
     );
 
     return tokenProvider.refreshToken(input.refreshToken());

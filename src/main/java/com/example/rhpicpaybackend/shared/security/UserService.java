@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String email) {
     Employee employee =  employeeRepository.findByEmail(email).orElseThrow(
-        () -> new UnauthorizedException("exception.login.invalid")
+        () -> new UnauthorizedException("{exception.login.invalid}")
     );
 
     return new CustomUserDetails(
