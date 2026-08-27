@@ -7,7 +7,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum EmployeeStatusEnum {
     UNDER_REVIEW("employee.status.under-review", 1),
     APPROVED("employee.status.approved", 2),
