@@ -3,11 +3,13 @@ package com.example.rhpicpaybackend.employee.controller;
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPatch;
 import com.example.rhpicpaybackend.employee.dto.groupValidations.doPost;
 import com.example.rhpicpaybackend.employee.dto.input.FindManyEmployeesInputDTO;
+import com.example.rhpicpaybackend.employee.dto.output.CountEmployeeOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.EmployeeDetailsOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.output.FindManyEmployeesOutputDTO;
 import com.example.rhpicpaybackend.employee.dto.query_params.FindManyEmployeesQueryParamsDTO;
 import com.example.rhpicpaybackend.employee.dto.request.EmployeeRequestDTO;
 import com.example.rhpicpaybackend.employee.service.EmployeeService;
+import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -60,7 +62,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<Map<String, Integer>> countEmployessStatus() {
+    public ResponseEntity<Map<EmployeeStatusEnum, Integer>> countEmployessStatus() {
         return new ResponseEntity<>(
                 service.countEmployeesStatus(),
                 HttpStatus.OK
@@ -104,5 +106,13 @@ public class EmployeeController {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<CountEmployeeOutputDTO> count() {
+        return new ResponseEntity<>(
+            service.count(),
+            HttpStatus.OK
+        );
     }
 }

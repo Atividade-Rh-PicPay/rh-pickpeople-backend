@@ -11,6 +11,7 @@ import com.example.rhpicpaybackend.shared.exceptions.UnauthorizedException;
 import com.example.rhpicpaybackend.shared.security.UserService;
 import com.example.rhpicpaybackend.shared.services.MessageService;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -119,14 +120,26 @@ public class JwtTokenProvider {
     }
   }
 
-  public String resolveToken(HttpServletRequest request){
+  public String resolveToken(HttpServletRequest request) {
     String bearerToken = request.getHeader("Authorization");
 
-    if (!StringUtils.isEmpty(bearerToken) && bearerToken.startsWith("Bearer ")) return bearerToken.substring("Bearer ".length());
+    if (!StringUtils.isEmpty(bearerToken)
+        && bearerToken.startsWith("Bearer ")) {
+      return bearerToken.substring("Bearer ".length());
+    }
+
+    Cookie[] cookies = request.getCookies();
+
+    if (cookies != null) {
+      for (Cookie cookie : cookies) {
+        if ("access_token".equals(cookie.getName())) {
+          return cookie.getValue();
+        }
+      }
+    }
 
     return null;
   }
-
   public boolean validateToken(String token){
     DecodedJWT decodedJWT = decodedToken(token);
 

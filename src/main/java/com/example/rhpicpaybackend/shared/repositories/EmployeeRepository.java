@@ -202,6 +202,24 @@ public class EmployeeRepository {
         return result.subList(fromIndex, toIndex);
     }
 
+    public Integer filteredCount(String name, String email, String role, EmployeeStatusEnum status){
+        Stream<Employee> stream = employees.values().stream();
+
+        if (name != null && !name.isBlank())
+            stream = stream.filter(employee -> employee.getName().contains(name));
+
+        if (email != null && !email.isBlank())
+            stream = stream.filter(employee -> employee.getEmail().equals(email));
+
+        if (role != null && !role.isBlank())
+            stream = stream.filter(employee -> employee.getRole().equals(role));
+
+        if (status != null)
+            stream = stream.filter(employee -> employee.getStatus().equals(status));
+
+        return stream.toList().size();
+    }
+
     public Optional<Employee> findByEmail(String email){
         return employees.values()
             .stream()
@@ -215,8 +233,8 @@ public class EmployeeRepository {
         return Optional.of(employee);
     }
 
-    public Map<String, Integer> countEmployeesStatus() {
-        Map<String, Integer> map = new HashMap<>();
+    public Map<EmployeeStatusEnum, Integer> countEmployeesStatus() {
+        Map<EmployeeStatusEnum, Integer> map = new HashMap<>();
 
         for (int i = 1; i <= EmployeeStatusEnum.values().length; i++) {
 
@@ -224,7 +242,7 @@ public class EmployeeRepository {
 
             EmployeeStatusEnum status = EmployeeStatusEnum.fromId(i);
             stream = stream.filter(employee -> employee.getStatus() == status);
-            map.put(status.getMessage(), stream.toList().size());
+            map.put(status, stream.toList().size());
         }
 
         return map;
