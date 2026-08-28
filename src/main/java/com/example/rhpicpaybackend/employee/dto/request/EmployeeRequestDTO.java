@@ -82,6 +82,6 @@ public class EmployeeRequestDTO {
     )
     private String city;
 
-    @NotNull(message = "Status requested.", groups = {doPut.class, doPatch.class})
+    @NotNull(message = "Status requested.", groups = {doPut.class})
     private Integer status;
 }
