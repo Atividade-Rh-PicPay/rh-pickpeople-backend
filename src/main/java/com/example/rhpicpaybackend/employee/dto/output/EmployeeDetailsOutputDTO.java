@@ -1,5 +1,6 @@
 package com.example.rhpicpaybackend.employee.dto.output;
 
+import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,5 @@ public class EmployeeDetailsOutputDTO {
     private String department;
     private Double salary;
     private String city;
-    private String status;
+    private EmployeeStatusEnum status;
 }
