@@ -274,7 +274,7 @@ public class EmployeeRepository {
             employee.setName(input.getName());
 
         if (input.getEmail() != null && employee.getEmail() != NormalizeInput.email(input.getEmail())) {
-            if (!(employee.getEmail() == input.getEmail()) && findByEmail(input.getEmail()).isPresent()) throw new ConflictException("exception.employee-email.conflict");
+            if (findByEmail(input.getEmail()).isPresent()) throw new ConflictException("exception.employee-email.conflict");
 
             employee.setEmail(input.getEmail());
         }
