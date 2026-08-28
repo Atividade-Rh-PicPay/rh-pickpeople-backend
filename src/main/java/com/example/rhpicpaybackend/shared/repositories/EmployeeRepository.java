@@ -1,7 +1,9 @@
 package com.example.rhpicpaybackend.shared.repositories;
 
 import com.example.rhpicpaybackend.employee.dto.request.EmployeeRequestDTO;
+import com.example.rhpicpaybackend.shared.exceptions.ConflictException;
 import com.example.rhpicpaybackend.shared.exceptions.NotFoundException;
+import com.example.rhpicpaybackend.shared.helpers.NormalizeInput;
 import com.example.rhpicpaybackend.shared.models.Employee;
 import com.example.rhpicpaybackend.shared.enums.EmployeeStatusEnum;
 import jakarta.annotation.PostConstruct;
@@ -268,30 +270,28 @@ public class EmployeeRepository {
     }
 
     public Employee partialUpdate(Employee employee, EmployeeRequestDTO input) {
-        if (input.getName() != null)
+        if (input.getName() != null && employee.getName() != NormalizeInput.name(input.getName()))
             employee.setName(input.getName());
 
-        if (input.getEmail() != null) {
-            if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("{exception.employee-email.conflict}");
+        if (input.getEmail() != null && employee.getEmail() != NormalizeInput.email(input.getEmail())) {
+            if (!(employee.getEmail() == input.getEmail()) && findByEmail(input.getEmail()).isPresent()) throw new ConflictException("exception.employee-email.conflict");
 
             employee.setEmail(input.getEmail());
         }
 
         if (input.getPassword() != null) employee.setPassword(passwordEncoder.encode(input.getPassword()));
 
-        if (input.getPhone() != null) employee.setPhone(input.getPhone());
+        if (input.getPhone() != null && employee.getPhone() != NormalizeInput.phone(input.getPhone())) employee.setPhone(input.getPhone());
 
-        if (input.getRole() != null) employee.setRole(input.getRole());
+        if (input.getRole() != null && employee.getRole() != NormalizeInput.name(input.getRole())) employee.setRole(input.getRole());
 
-        if (input.getDepartment() != null) employee.setDepartment(input.getDepartment());
+        if (input.getDepartment() != null && employee.getDepartment() != NormalizeInput.name(input.getDepartment())) employee.setDepartment(input.getDepartment());
 
         if (input.getSalary() != null) employee.setSalary(input.getSalary());
 
-        if (input.getCity() != null) employee.setCity(input.getCity());
+        if (input.getCity() != null && employee.getCity() != NormalizeInput.name(input.getCity())) employee.setCity(input.getCity());
 
-        if (input.getCity() != null) employee.setCity(input.getCity());
-
-        if (input.getStatus() != null) employee.setStatus(EmployeeStatusEnum.fromId(input.getStatus()));
+        if (input.getStatus() != null && employee.getStatus() != EmployeeStatusEnum.fromId(input.getStatus())) employee.setStatus(EmployeeStatusEnum.fromId(input.getStatus()));
 
         employees.put(employee.getId(), employee);
 
