@@ -38,7 +38,7 @@ public class EmployeeRepository {
             NormalizeInput.name("Recursos Humanos"),
             5500.00,
             NormalizeInput.name("São Paulo"),
-            EmployeeStatusEnum.APPROVED
+            EmployeeStatusEnum.HIRED
         ));
 
         save(new Employee(
@@ -227,6 +227,13 @@ public class EmployeeRepository {
             .stream()
             .filter(employee -> employee.getEmail().equals(email))
             .findFirst();
+    }
+
+    public Optional<Employee> findByEmailHired(String email){
+        return employees.values()
+                .stream()
+                .filter(employee -> employee.getEmail().equals(email) && employee.getStatus() == EmployeeStatusEnum.HIRED)
+                .findFirst();
     }
 
     public Optional<Employee> findById(Long id) {
