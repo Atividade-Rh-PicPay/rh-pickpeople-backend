@@ -31,11 +31,11 @@ public class EmployeeRepository {
     private void initializeData() {
         save(new Employee(
             NormalizeInput.name("Ryan Cursino"),
-            NormalizeInput.email("ryan.cursino@picpay.com"),
+            NormalizeInput.email("ryan.moraes@picpay.com"),
             passwordEncoder.encode("Senha123"),
             "(11) 99999-0001",
             NormalizeInput.name("Desenvolvedor Backend"),
-            NormalizeInput.name("Tecnologia"),
+            NormalizeInput.name("Recursos Humanos"),
             5500.00,
             NormalizeInput.name("São Paulo"),
             EmployeeStatusEnum.APPROVED
