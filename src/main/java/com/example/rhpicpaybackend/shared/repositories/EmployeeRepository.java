@@ -32,8 +32,8 @@ public class EmployeeRepository {
                 "ryan.cursino@picpay.com",
                 passwordEncoder.encode("Senha123"),
                 "(11) 99999-0001",
-                "Desenvolvedor Backend",
-                "Tecnologia",
+                "Analista de Recursos Humanos",
+                "Recursos Humanos",
                 5500.00,
                 "São Paulo",
                 EmployeeStatusEnum.APPROVED
