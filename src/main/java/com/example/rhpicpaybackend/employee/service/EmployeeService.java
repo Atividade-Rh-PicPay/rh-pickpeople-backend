@@ -55,7 +55,7 @@ public class EmployeeService {
             NormalizeOutput.name(employee.getDepartment()),
             employee.getSalary(),
             NormalizeOutput.name(employee.getCity()),
-            messageService.getMessage(employee.getStatus().getMessage())
+            employee.getStatus()
         );
     }
 
@@ -105,7 +105,7 @@ public class EmployeeService {
                 NormalizeOutput.name(employee.getDepartment()),
                 employee.getSalary(),
                 NormalizeOutput.name(employee.getCity()),
-                messageService.getMessage(employee.getStatus().getMessage())
+                employee.getStatus()
         );
     }
 
@@ -126,7 +126,7 @@ public class EmployeeService {
                 NormalizeOutput.name(employee.getDepartment()),
                 employee.getSalary(),
                 NormalizeOutput.name(employee.getCity()),
-                messageService.getMessage(employee.getStatus().getMessage())
+                employee.getStatus()
         );
     }
 
@@ -143,7 +143,7 @@ public class EmployeeService {
                 updatedEmployee.getDepartment(),
                 updatedEmployee.getSalary(),
                 updatedEmployee.getCity(),
-                messageService.getMessage(updatedEmployee.getStatus().getMessage())
+                updatedEmployee.getStatus()
         );
     }
 
