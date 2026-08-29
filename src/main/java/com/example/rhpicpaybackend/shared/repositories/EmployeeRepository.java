@@ -30,134 +30,134 @@ public class EmployeeRepository {
     @PostConstruct
     private void initializeData() {
         save(new Employee(
-                "Ryan Cursino",
-                "ryan.cursino@picpay.com",
-                passwordEncoder.encode("Senha123"),
-                "(11) 99999-0001",
-                "Desenvolvedor Backend",
-                "Tecnologia",
-                5500.00,
-                "São Paulo",
-                EmployeeStatusEnum.APPROVED
+            NormalizeInput.name("Ryan Cursino"),
+            NormalizeInput.email("ryan.cursino@picpay.com"),
+            passwordEncoder.encode("Senha123"),
+            "(11) 99999-0001",
+            NormalizeInput.name("Desenvolvedor Backend"),
+            NormalizeInput.name("Tecnologia"),
+            5500.00,
+            NormalizeInput.name("São Paulo"),
+            EmployeeStatusEnum.APPROVED
         ));
 
         save(new Employee(
-                "Lucas Almeida",
-                "lucas.almeida@picpay.com",
-                passwordEncoder.encode("Senha123"),
-                "(11) 99999-0002",
-                "Desenvolvedor Frontend",
-                "Tecnologia",
-                5200.00,
-                "São Paulo",
-                EmployeeStatusEnum.UNDER_REVIEW
+            NormalizeInput.name("Lucas Almeida"),
+            NormalizeInput.email("lucas.almeida@picpay.com"),
+            passwordEncoder.encode("Senha123"),
+            "(11) 99999-0002",
+            NormalizeInput.name("Desenvolvedor Frontend"),
+            NormalizeInput.name("Tecnologia"),
+            5200.00,
+            NormalizeInput.name("São Paulo"),
+            EmployeeStatusEnum.UNDER_REVIEW
         ));
 
         save(new Employee(
-                "Mariana Santos",
-                "mariana.santos@picpay.com",
-                passwordEncoder.encode("Senha123"),
-                "(21) 99999-0003",
-                "Analista de Dados",
-                "Dados",
-                6800.00,
-                "Rio de Janeiro",
-                EmployeeStatusEnum.APPROVED
+            NormalizeInput.name("Mariana Santos"),
+            NormalizeInput.email("mariana.santos@picpay.com"),
+            passwordEncoder.encode("Senha123"),
+            "(21) 99999-0003",
+            NormalizeInput.name("Analista de Dados"),
+            NormalizeInput.name("Dados"),
+            6800.00,
+            NormalizeInput.name("Rio de Janeiro"),
+            EmployeeStatusEnum.APPROVED
         ));
 
         save(new Employee(
-                "Gabriel Oliveira",
-                "gabriel.oliveira@picpay.com",
-                passwordEncoder.encode("Senha123"),
-                "(11) 99999-0004",
-                "Engenheiro de Dados",
-                "Dados",
-                7500.00,
-                "São Paulo",
-                EmployeeStatusEnum.APPROVED
+            NormalizeInput.name("Gabriel Oliveira"),
+            NormalizeInput.email("gabriel.oliveira@picpay.com"),
+            passwordEncoder.encode("Senha123"),
+            "(11) 99999-0004",
+            NormalizeInput.name("Engenheiro de Dados"),
+            NormalizeInput.name("Dados"),
+            7500.00,
+            NormalizeInput.name("São Paulo"),
+            EmployeeStatusEnum.APPROVED
         ));
 
         save(new Employee(
-                "Beatriz Ferreira",
-                "beatriz.ferreira@picpay.com",
-                passwordEncoder.encode("Senha123"),
-                "(31) 99999-0005",
-                "Product Manager",
-                "Produto",
-                8500.00,
-                "Belo Horizonte",
-                EmployeeStatusEnum.HIRED
+            NormalizeInput.name("Beatriz Ferreira"),
+            NormalizeInput.email("beatriz.ferreira@picpay.com"),
+            passwordEncoder.encode("Senha123"),
+            "(31) 99999-0005",
+            NormalizeInput.name("Product Manager"),
+            NormalizeInput.name("Produto"),
+            8500.00,
+            NormalizeInput.name("Belo Horizonte"),
+            EmployeeStatusEnum.HIRED
         ));
 
         save(new Employee(
-                "João Pedro",
-            "joao.pedro@picpay.com",
-                passwordEncoder.encode("Senha123"),
-                "(41) 99999-0006",
-                "Analista de Segurança",
-                "Segurança",
-                7200.00,
-                "Curitiba",
-                EmployeeStatusEnum.UNDER_REVIEW
+            NormalizeInput.name("João Pedro"),
+            NormalizeInput.email("joao.pedro@picpay.com"),
+            passwordEncoder.encode("Senha123"),
+            "(41) 99999-0006",
+            NormalizeInput.name("Analista de Segurança"),
+            NormalizeInput.name("Segurança"),
+            7200.00,
+            NormalizeInput.name("Curitiba"),
+            EmployeeStatusEnum.UNDER_REVIEW
         ));
 
         save(new Employee(
-                "Ana Carolina",
-                "ana.carolina@picpay.com",
-                passwordEncoder.encode("Senha123"),
-                "(11) 99999-0007",
-                "UX Designer",
-                "Design",
-                6100.00,
-                "São Paulo",
-                EmployeeStatusEnum.REJECTED
+            NormalizeInput.name("Ana Carolina"),
+            NormalizeInput.email("ana.carolina@picpay.com"),
+            passwordEncoder.encode("Senha123"),
+            "(11) 99999-0007",
+            NormalizeInput.name("UX Designer"),
+            NormalizeInput.name("Design"),
+            6100.00,
+            NormalizeInput.name("São Paulo"),
+            EmployeeStatusEnum.REJECTED
         ));
 
         save(new Employee(
-                "Matheus Rodrigues",
-                "matheus.rodrigues@picpay.com",
-                passwordEncoder.encode("Senha123"),
-                "(51) 99999-0008",
-                "Analista de Recursos Humanos",
-                "Recursos Humanos",
-                4800.00,
-                "Porto Alegre",
-                EmployeeStatusEnum.APPROVED
+            NormalizeInput.name("Matheus Rodrigues"),
+            NormalizeInput.email("matheus.rodrigues@picpay.com"),
+            passwordEncoder.encode("Senha123"),
+            "(51) 99999-0008",
+            NormalizeInput.name("Analista de Recursos Humanos"),
+            NormalizeInput.name("Recursos Humanos"),
+            4800.00,
+            NormalizeInput.name("Porto Alegre"),
+            EmployeeStatusEnum.APPROVED
         ));
 
         save(new Employee(
-                "Larissa Martins",
-                "larissa.martins@picpay.com",
-                passwordEncoder.encode("Senha123"),
-                "(11) 99999-0009",
-                "Tech Lead",
-                "Tecnologia",
-                10500.00,
-                "São Paulo",
-                EmployeeStatusEnum.UNDER_REVIEW
+            NormalizeInput.name("Larissa Martins"),
+            NormalizeInput.email("larissa.martins@picpay.com"),
+            passwordEncoder.encode("Senha123"),
+            "(11) 99999-0009",
+            NormalizeInput.name("Tech Lead"),
+            NormalizeInput.name("Tecnologia"),
+            10500.00,
+            NormalizeInput.name("São Paulo"),
+            EmployeeStatusEnum.UNDER_REVIEW
         ));
 
         save(new Employee(
-                "Felipe Costa",
-                "felipe.costa@picpay.com",
-                passwordEncoder.encode("Senha123"),
-                "(19) 99999-0010",
-                "Analista Financeiro",
-                "Financeiro",
-                5900.00,
-                "Campinas",
-                EmployeeStatusEnum.UNDER_REVIEW
-        ));
-
-        save(new Employee(
-            "caio marcos",
-            "caio.marcos@picpay.com",
+            NormalizeInput.name("Felipe Costa"),
+            NormalizeInput.email("felipe.costa@picpay.com"),
             passwordEncoder.encode("Senha123"),
             "(19) 99999-0010",
-            "analista de recursos humanos",
-            "recursos humanos",
+            NormalizeInput.name("Analista Financeiro"),
+            NormalizeInput.name("Financeiro"),
             5900.00,
-            "campinas",
+            NormalizeInput.name("Campinas"),
+            EmployeeStatusEnum.UNDER_REVIEW
+        ));
+
+        save(new Employee(
+            NormalizeInput.name("Caio Marcos"),
+            NormalizeInput.email("caio.marcos@picpay.com"),
+            passwordEncoder.encode("Senha123"),
+            "(19) 99999-0010",
+            NormalizeInput.name("Analista de Recursos Humanos"),
+            NormalizeInput.name("Recursos Humanos"),
+            5900.00,
+            NormalizeInput.name("Campinas"),
             EmployeeStatusEnum.APPROVED
         ));
     }
@@ -175,13 +175,13 @@ public class EmployeeRepository {
         Stream<Employee> stream = employees.values().stream();
 
         if (name != null && !name.isBlank())
-            stream = stream.filter(employee -> employee.getName().contains(name));
+            stream = stream.filter(employee -> employee.getName().contains(NormalizeInput.name(name)));
 
         if (email != null && !email.isBlank())
-            stream = stream.filter(employee -> employee.getEmail().equals(email));
+            stream = stream.filter(employee -> employee.getEmail().equals(NormalizeInput.email(email)));
 
         if (role != null && !role.isBlank())
-            stream = stream.filter(employee -> employee.getRole().equals(role));
+            stream = stream.filter(employee -> employee.getRole().equals(NormalizeInput.name(role)));
 
         if (status != null)
             stream = stream.filter(employee -> employee.getStatus().equals(status));
@@ -208,13 +208,13 @@ public class EmployeeRepository {
         Stream<Employee> stream = employees.values().stream();
 
         if (name != null && !name.isBlank())
-            stream = stream.filter(employee -> employee.getName().contains(name));
+            stream = stream.filter(employee -> employee.getName().contains(NormalizeInput.name(name)));
 
         if (email != null && !email.isBlank())
-            stream = stream.filter(employee -> employee.getEmail().equals(email));
+            stream = stream.filter(employee -> employee.getEmail().equals(NormalizeInput.email(email)));
 
         if (role != null && !role.isBlank())
-            stream = stream.filter(employee -> employee.getRole().equals(role));
+            stream = stream.filter(employee -> employee.getRole().equals(NormalizeInput.name(role)));
 
         if (status != null)
             stream = stream.filter(employee -> employee.getStatus().equals(status));
@@ -253,14 +253,14 @@ public class EmployeeRepository {
     public Employee fullUpdate(Employee employee, EmployeeRequestDTO input) {
         if (findByEmail(input.getEmail()).isPresent()) throw  new NotFoundException("{exception.employee-email.conflict}");
 
-        employee.setName(input.getName());
-        employee.setEmail(input.getEmail());
-        employee.setPassword(passwordEncoder.encode(input.getPassword()));
-        employee.setPhone(input.getPhone());
-        employee.setRole(input.getRole());
-        employee.setDepartment(input.getDepartment());
+        employee.setName(NormalizeInput.name(input.getName()));
+        employee.setEmail(NormalizeInput.email(input.getEmail()));
+        employee.setPassword(passwordEncoder.encode(NormalizeInput.password(input.getPassword())));
+        employee.setPhone(NormalizeInput.phone(input.getPhone()));
+        employee.setRole(NormalizeInput.name(input.getRole()));
+        employee.setDepartment(NormalizeInput.name(input.getDepartment()));
         employee.setSalary(input.getSalary());
-        employee.setCity(input.getCity());
+        employee.setCity(NormalizeInput.name(input.getCity()));
 
         if (input.getStatus() != null) employee.setStatus(EmployeeStatusEnum.fromId(input.getStatus()));
 
@@ -270,31 +270,67 @@ public class EmployeeRepository {
     }
 
     public Employee partialUpdate(Employee employee, EmployeeRequestDTO input) {
-        if (input.getName() != null && employee.getName() != NormalizeInput.name(input.getName()))
-            employee.setName(input.getName());
-
-        if (input.getEmail() != null && employee.getEmail() != NormalizeInput.email(input.getEmail())) {
-            if (findByEmail(input.getEmail()).isPresent()) throw new ConflictException("exception.employee-email.conflict");
-
-            employee.setEmail(input.getEmail());
+        if (input.getName() != null) {
+            String normalizedName = NormalizeInput.name(input.getName());
+            if (!Objects.equals(employee.getName(), normalizedName)) {
+                employee.setName(input.getName());
+            }
         }
 
-        if (input.getPassword() != null) employee.setPassword(passwordEncoder.encode(input.getPassword()));
+        if (input.getEmail() != null) {
+            String normalizedEmail = NormalizeInput.email(input.getEmail());
+            if (!Objects.equals(employee.getEmail(), normalizedEmail)) {
+                if (findByEmail(input.getEmail()).isPresent()) {
+                    throw new ConflictException("exception.employee-email.conflict");
+                }
+                employee.setEmail(input.getEmail());
+            }
+        }
 
-        if (input.getPhone() != null && employee.getPhone() != NormalizeInput.phone(input.getPhone())) employee.setPhone(input.getPhone());
+        if (input.getPassword() != null) {
+            employee.setPassword(passwordEncoder.encode(input.getPassword()));
+        }
 
-        if (input.getRole() != null && employee.getRole() != NormalizeInput.name(input.getRole())) employee.setRole(input.getRole());
+        if (input.getPhone() != null) {
+            String normalizedPhone = NormalizeInput.phone(input.getPhone());
+            if (!Objects.equals(employee.getPhone(), normalizedPhone)) {
+                employee.setPhone(input.getPhone());
+            }
+        }
 
-        if (input.getDepartment() != null && employee.getDepartment() != NormalizeInput.name(input.getDepartment())) employee.setDepartment(input.getDepartment());
+        if (input.getRole() != null) {
+            String normalizedRole = NormalizeInput.name(input.getRole());
+            if (!Objects.equals(employee.getRole(), normalizedRole)) {
+                employee.setRole(input.getRole());
+            }
+        }
 
-        if (input.getSalary() != null) employee.setSalary(input.getSalary());
+        if (input.getDepartment() != null) {
+            String normalizedDept = NormalizeInput.name(input.getDepartment());
+            if (!Objects.equals(employee.getDepartment(), normalizedDept)) {
+                employee.setDepartment(input.getDepartment());
+            }
+        }
 
-        if (input.getCity() != null && employee.getCity() != NormalizeInput.name(input.getCity())) employee.setCity(input.getCity());
+        if (input.getSalary() != null) {
+            employee.setSalary(input.getSalary());
+        }
 
-        if (input.getStatus() != null && employee.getStatus() != EmployeeStatusEnum.fromId(input.getStatus())) employee.setStatus(EmployeeStatusEnum.fromId(input.getStatus()));
+        if (input.getCity() != null) {
+            String normalizedCity = NormalizeInput.name(input.getCity());
+            if (!Objects.equals(employee.getCity(), normalizedCity)) {
+                employee.setCity(input.getCity());
+            }
+        }
+
+        if (input.getStatus() != null) {
+            EmployeeStatusEnum normalizedStatus = EmployeeStatusEnum.fromId(input.getStatus());
+            if (!Objects.equals(employee.getStatus(), normalizedStatus)) {
+                employee.setStatus(normalizedStatus);
+            }
+        }
 
         employees.put(employee.getId(), employee);
-
         return employee;
     }
 

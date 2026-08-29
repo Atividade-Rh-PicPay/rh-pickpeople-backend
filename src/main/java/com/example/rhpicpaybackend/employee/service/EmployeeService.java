@@ -71,16 +71,16 @@ public class EmployeeService {
         );
 
         List<EmployeeCardOutputDTO> employees = employeesEntities.stream()
-                .map(employee -> new EmployeeCardOutputDTO(
-                        employee.getId(),
-                        employee.getName(),
-                        employee.getEmail(),
-                        employee.getRole(),
-                        employee.getDepartment(),
-                        employee.getStatus(),
-                        employee.getCreatedAt()
-                ))
-                .toList();
+            .map(employee -> new EmployeeCardOutputDTO(
+                employee.getId(),
+                NormalizeOutput.name(employee.getName()),
+                NormalizeOutput.email(employee.getEmail()),
+                NormalizeOutput.name(employee.getRole()),
+                NormalizeOutput.name(employee.getDepartment()),
+                employee.getStatus(),
+                employee.getCreatedAt()
+            ))
+            .toList();
 
         return new FindManyEmployeesOutputDTO(
             employees,
@@ -135,15 +135,15 @@ public class EmployeeService {
         Employee updatedEmployee = repository.partialUpdate(originalEmployee, input);
 
         return new EmployeeDetailsOutputDTO(
-                updatedEmployee.getId(),
-                updatedEmployee.getName(),
-                updatedEmployee.getEmail(),
-                updatedEmployee.getPhone(),
-                updatedEmployee.getRole(),
-                updatedEmployee.getDepartment(),
-                updatedEmployee.getSalary(),
-                updatedEmployee.getCity(),
-                updatedEmployee.getStatus()
+            updatedEmployee.getId(),
+            NormalizeOutput.name(updatedEmployee.getName()),
+            NormalizeOutput.email(updatedEmployee.getEmail()),
+            NormalizeOutput.phone(updatedEmployee.getPhone()),
+            NormalizeOutput.name(updatedEmployee.getRole()),
+            NormalizeOutput.name(updatedEmployee.getDepartment()),
+            updatedEmployee.getSalary(),
+            NormalizeOutput.name(updatedEmployee.getCity()),
+            updatedEmployee.getStatus()
         );
     }
 
