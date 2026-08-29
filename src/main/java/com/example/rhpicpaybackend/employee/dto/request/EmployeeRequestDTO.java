@@ -71,7 +71,7 @@ public class EmployeeRequestDTO {
     private String department;
 
     @NotNull(message = "{validation.salary.required}", groups = doPost.class)
-    @DecimalMin(value = "0.0", message = "{validation.salary.min-value}", groups = {doPost.class, doPatch.class})
+    @DecimalMin(value = "0.1", message = "{validation.salary.min-value}", groups = {doPost.class, doPatch.class})
     private Double salary;
 
     @NotBlank(message = "{validation.city.required}", groups = doPost.class)
