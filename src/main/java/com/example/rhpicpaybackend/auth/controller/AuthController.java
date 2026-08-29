@@ -30,7 +30,7 @@ public class AuthController {
       Duration.ofHours(1);
 
   private static final Duration REFRESH_TOKEN_DURATION =
-      Duration.ofDays(7);
+      Duration.ofHours(3);
 
   private final AuthService authService;
 
