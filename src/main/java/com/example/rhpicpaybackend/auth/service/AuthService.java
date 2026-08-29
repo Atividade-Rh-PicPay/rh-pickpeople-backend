@@ -33,7 +33,7 @@ public class AuthService {
         )
     );
 
-    Employee employee = employeeRepository.findByEmail(input.email()).orElseThrow(
+    Employee employee = employeeRepository.findByEmailHired(input.email()).orElseThrow(
         () -> new BadRequestException("exception.login.invalid")
     );
 
