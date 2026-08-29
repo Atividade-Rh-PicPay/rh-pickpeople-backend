@@ -39,7 +39,7 @@ public class EmployeeRequestDTO {
         message = "{validation.password.size}",
         groups = {doPost.class, doPatch.class, doPut.class}
     )
-    @Email(
+    @Pattern(
         regexp = RegexPatterns.PASSWORD,
         message = "{validation.password.regex}",
         groups = {doPost.class, doPatch.class, doPut.class}
