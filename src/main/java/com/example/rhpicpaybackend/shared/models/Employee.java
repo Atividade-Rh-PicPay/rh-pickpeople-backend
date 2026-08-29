@@ -37,28 +37,4 @@ public class Employee {
         this.status = status;
         this.createdAt = LocalDateTime.now();
     }
-
-    public String getName() {
-        return NormalizeOutput.name(name);
-    }
-
-    public String getEmail() {
-        return NormalizeOutput.email(email);
-    }
-
-    public String getRole() {
-        return NormalizeOutput.name(role);
-    }
-
-    public String getDepartment() {
-        return NormalizeOutput.name(department);
-    }
-
-    public String getPhone(){
-        return NormalizeOutput.phone(phone);
-    }
-
-    public String getCity() {
-        return NormalizeOutput.name(city);
-    }
 }

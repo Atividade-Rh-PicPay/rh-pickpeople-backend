@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/api/v1/employees",
                     "/api/v1/employees/**"
-                ).hasRole("Recursos Humanos")
+                ).hasRole("recursos humanos")
                 .requestMatchers(
                     "/api/v1/profile"
                 ).authenticated()

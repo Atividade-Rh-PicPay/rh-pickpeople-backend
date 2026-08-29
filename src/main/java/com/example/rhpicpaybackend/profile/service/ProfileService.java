@@ -52,17 +52,16 @@ public class ProfileService {
 
     return new FindMyProfileOutputDTO(
         updatedEmployee.getId(),
-        updatedEmployee.getName(),
-        updatedEmployee.getEmail(),
-        updatedEmployee.getPhone(),
-        updatedEmployee.getRole(),
-        updatedEmployee.getDepartment(),
+        NormalizeOutput.name(updatedEmployee.getName()),
+        NormalizeOutput.email(updatedEmployee.getEmail()),
+        NormalizeOutput.phone(updatedEmployee.getPhone()),
+        NormalizeOutput.name(updatedEmployee.getRole()),
+        NormalizeOutput.name(updatedEmployee.getDepartment()),
         updatedEmployee.getSalary(),
-        updatedEmployee.getCity(),
+        NormalizeOutput.name(updatedEmployee.getCity()),
         messageService.getMessage(updatedEmployee.getStatus().getMessage())
     );
   }
-
   private Employee find(Long id){
     return employeeRepository.findById(id).orElseThrow(
         () -> new NotFoundException("exception.employee.not-found")
